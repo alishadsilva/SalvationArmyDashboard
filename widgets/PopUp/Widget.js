@@ -13,14 +13,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 ///////////////////////////////////////////////////////////////////////////
-define(['dojo/_base/declare', 'jimu/BaseWidget'],
-function(declare, BaseWidget) {
+define(['dojo/_base/declare',
+"dijit/_TemplatedMixin",
+'dijit/_WidgetsInTemplateMixin',
+'dojo/_base/lang',
+'jimu/BaseWidget',
+"esri/tasks/query",
+"esri/tasks/QueryTask",
+"esri/geometry/geometryEngine",
+"dojo/_base/array",
+'dojo/query',
+"dojo/parser",
+"dojo/dom-construct",
+"dojox/layout/TableContainer",
+"dijit/form/Textarea",
+"dojo/domReady!"
+],
+function(declare, _TemplatedMixin, _WidgetsInTemplateMixin, lang, BaseWidget, Query, QueryTask, geometryEngine, arrayUtils, query, parser, domConstruct, TableContainer, Textarea) {
   //To create a widget, you need to derive from BaseWidget.
-  return declare([BaseWidget], {
-    // DemoWidget code goes here
-
-    //please note that this property is be set by the framework when widget is loaded.
-    //templateString: template,
+  return declare([BaseWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
     baseClass: 'jimu-widget-popup',
 
@@ -31,7 +42,42 @@ function(declare, BaseWidget) {
 
     startup: function() {
       this.inherited(arguments);
-      this.mapIdNode.innerHTML = 'map id:' + this.map.id;
+      var programmatic = new TableContainer(
+        {
+          cols: 1
+        }, dojo.byId("select1"))
+
+      this.map.on("click", lang.hitch(this, function queryfeatures(evt){
+
+        console.log(evt.mapPoint)
+        queryTask= new QueryTask("https://services2.arcgis.com/ffEKAbD1SATUihBS/arcgis/rest/services/GenasysSAInputshosted/FeatureServer/0")
+          var queryparams= new Query()
+          queryparams.where="1=1"
+          queryparams.outFields=['*']
+          queryparams.returnGeometry=true
+          queryparams.spatialRelationship= Query.SPATIAL_REL_CONTAINS
+          var test= geometryEngine.buffer(evt.mapPoint, 20, "miles")
+          queryparams.geometry= test
+          queryTask
+            .execute(queryparams)
+            .addCallback(lang.hitch(this, function (response) {
+              console.log(response)
+              var content=[]
+              var tc = query("#display1")
+              arrayUtils.map(response.features, lang.hitch(this, function (feature) {
+                distance=geometryEngine.distance(evt.mapPoint, feature.geometry, "miles")
+                // content.push(distance)
+                content.push(feature.attributes.USER_Corps)
+                var id= "#" + feature.attributes.FID
+                var textarea = new Textarea({
+                  title: "Corp Name:",
+                  value: "Corp Name: " + feature.attributes.USER_Corps+ "\r\n" +"Corp Address: " + feature.attributes.USER_Cor_1 + "\r\n" + "How many Kitchens available? " + feature.attributes.USER_Kitch + "\r\n" + "How many Canteens are available? "+feature.attributes.USER_Cante,
+                  style: "font-family: inherit; height: 150px"
+              }, domConstruct.create("div"));
+              programmatic.addChild(textarea)
+              }));
+            }))
+          }))
       console.log('startup');
     },
 
