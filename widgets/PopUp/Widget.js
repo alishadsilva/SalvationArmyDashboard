@@ -16,6 +16,7 @@
 define(['dojo/_base/declare',
 "dijit/_TemplatedMixin",
 'dijit/_WidgetsInTemplateMixin',
+"dojo/dom-style",
 'dojo/_base/lang',
 'jimu/BaseWidget',
 "esri/tasks/query",
@@ -29,7 +30,7 @@ define(['dojo/_base/declare',
 "dijit/form/Textarea",
 "dojo/domReady!"
 ],
-function(declare, _TemplatedMixin, _WidgetsInTemplateMixin, lang, BaseWidget, Query, QueryTask, geometryEngine, arrayUtils, query, parser, domConstruct, TableContainer, Textarea) {
+function(declare, _TemplatedMixin, _WidgetsInTemplateMixin, domStyle, lang, BaseWidget, Query, QueryTask, geometryEngine, arrayUtils, query, parser, domConstruct, TableContainer, Textarea) {
   //To create a widget, you need to derive from BaseWidget.
   return declare([BaseWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
@@ -48,8 +49,8 @@ function(declare, _TemplatedMixin, _WidgetsInTemplateMixin, lang, BaseWidget, Qu
         }, dojo.byId("select1"))
 
       this.map.on("click", lang.hitch(this, function queryfeatures(evt){
-
         console.log(evt.mapPoint)
+        domConstruct.empty("select1")
         queryTask= new QueryTask("https://services2.arcgis.com/ffEKAbD1SATUihBS/arcgis/rest/services/GenasysSAInputshosted/FeatureServer/0")
           var queryparams= new Query()
           queryparams.where="1=1"
@@ -63,18 +64,16 @@ function(declare, _TemplatedMixin, _WidgetsInTemplateMixin, lang, BaseWidget, Qu
             .addCallback(lang.hitch(this, function (response) {
               console.log(response)
               var content=[]
-              var tc = query("#display1")
+              var tc = query("#select1")
               arrayUtils.map(response.features, lang.hitch(this, function (feature) {
-                distance=geometryEngine.distance(evt.mapPoint, feature.geometry, "miles")
-                // content.push(distance)
+                var num=geometryEngine.distance(evt.mapPoint, feature.geometry, "miles")
+                var distance= num.toFixed(2)
                 content.push(feature.attributes.USER_Corps)
-                var id= "#" + feature.attributes.FID
-                var textarea = new Textarea({
-                  title: "Corp Name:",
-                  value: "Corp Name: " + feature.attributes.USER_Corps+ "\r\n" +"Corp Address: " + feature.attributes.USER_Cor_1 + "\r\n" + "How many Kitchens available? " + feature.attributes.USER_Kitch + "\r\n" + "How many Canteens are available? "+feature.attributes.USER_Cante,
-                  style: "font-family: inherit; height: 150px"
-              }, domConstruct.create("div"));
-              programmatic.addChild(textarea)
+
+                var innerhtml= "<b>Distance: </b>"+ distance +" mi <br> <b>Corp Name: </b>" + feature.attributes.USER_Corps + "<br> <b>Corp Address: </b>" + feature.attributes.USER_Cor_1 +  "<br> <b> Total Volunteers interested in responding to disasters: </b>"+ feature.attributes.USER_Appro +"<br> <b>Number of Kitchens: </b>" + feature.attributes.USER_Kitch + "<br> <b>Number of available canteens: </b>"+feature.attributes.USER_Cante+  "<br> <b>Amount & types of vehicles: </b>" +feature.attributes.USER_Oth_1 +"<br> <b> Meals a day: </b>" +feature.attributes.USER_Meals +"<br> <b> What is the Facility good at? </b>"+feature.attributes.USER_What_ + "<br> <b> Number of active EDS volunteers: </b>" + feature.attributes.USER_How_m +"<br>---------------------------------------------------------------------------<br>"
+
+                var testdiv= domConstruct.create("div", {id: "test", innerHTML: innerhtml }, tc[0], "first")
+                domStyle.set(testdiv, "font-family", "inherit")
               }));
             }))
           }))
