@@ -27,10 +27,9 @@ define(['dojo/_base/declare',
 "dojo/parser",
 "dojo/dom-construct",
 "dojox/layout/TableContainer",
-"dijit/form/Textarea",
 "dojo/domReady!"
 ],
-function(declare, _TemplatedMixin, _WidgetsInTemplateMixin, domStyle, lang, BaseWidget, Query, QueryTask, geometryEngine, arrayUtils, query, parser, domConstruct, TableContainer, Textarea) {
+function(declare, _TemplatedMixin, _WidgetsInTemplateMixin, domStyle, lang, BaseWidget, Query, QueryTask, geometryEngine, arrayUtils, query, parser, domConstruct, TableContainer) {
   //To create a widget, you need to derive from BaseWidget.
   return declare([BaseWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
 

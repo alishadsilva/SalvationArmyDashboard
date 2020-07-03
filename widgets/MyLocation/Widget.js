@@ -20,14 +20,25 @@ define([
     "esri/dijit/LocateButton",
     'dojo/_base/html',
     'dojo/on',
+    'dojo/query',
     'dojo/_base/lang',
     'jimu/utils',
     "./Compass",
     "./a11y/Widget",
+    "esri/toolbars/draw", 
+    "esri/symbols/SimpleLineSymbol",
+    "esri/symbols/SimpleFillSymbol",
+    "esri/graphic", 
+    "esri/Color",
+    "esri/tasks/query",
+    "esri/tasks/QueryTask",
+    "dojo/dom-construct",
+    "dojo/dom-style",
+    "dojo/_base/array",
     'jimu/dijit/Message',
     'dojo/touch'
   ],
-  function(declare, BaseWidget, LocateButton, html, on, lang, jimuUtils, Compass, a11y) {
+  function(declare, BaseWidget, LocateButton, html, on, query, lang, jimuUtils, Compass, a11y, Draw,SimpleLineSymbol, SimpleFillSymbol, Graphic, Color, Query, QueryTask, domConstruct, domStyle, arrayUtils) {
     var clazz = declare([BaseWidget], {
 
       name: 'MyLocation',
@@ -42,155 +53,43 @@ define([
           'class': 'place-holder',
           title: this.label
         }, this.domNode);
-
-        this.isNeedHttpsButNot = jimuUtils.isNeedHttpsButNot();
-
-        if (true === this.isNeedHttpsButNot) {
-          console.log('LocateButton::navigator.geolocation requires a secure origin.');
-          html.addClass(this.placehoder, "nohttps");
-          html.setAttr(this.placehoder, 'title', this.nls.httpNotSupportError);
-        } else if (window.navigator.geolocation) {
-          this.own(on(this.placehoder, 'click', lang.hitch(this, this.onLocationClick)));
-          this.own(on(this.map, 'zoom-end', lang.hitch(this, this._scaleChangeHandler)));
-
-          this.a11y_initEvents();
-        } else {
-          html.setAttr(this.placehoder, 'title', this.nls.browserError);
-        }
+        this.own(on(this.placehoder, 'click', lang.hitch(this, this.onLocationClick)));
       },
 
       onLocationClick: function(evt) {
-        if(evt && evt.stopPropagation){
-          evt.stopPropagation();
-        }
+        console.log("Location test")
+        var markerpolySymbol = new SimpleFillSymbol();
+            markerpolySymbol.setColor(new Color([255,255,0,0.25]));
 
-        if (html.hasClass(this.domNode, "onCenter") ||
-          html.hasClass(this.domNode, "locating")) {
-          html.removeClass(this.domNode, "onCenter");
-          html.removeClass(this.placehoder, "tracking");
-          this._destroyGeoLocate();
-          // this._destroyDirectionHandler();
-          // this._destroyAccCircle();
-          this._tryToCleanCompass();
-        } else {
-          this._createGeoLocate();
-          this.geoLocate.locate();
-          html.addClass(this.placehoder, "locating");
-        }
-      },
+            var toolbar = new Draw(this.map);
+            toolbar.activate(Draw.POLYGON)
+            toolbar.on("draw-end", addGraphic);
 
-      //use current scale in Tracking
-      _scaleChangeHandler: function() {
-        var scale = this.map.getScale();
-        if (scale && this.geoLocate && this.geoLocate.useTracking) {
-          this.geoLocate.scale = scale;
-        }
-      },
+          function addGraphic(polyevt){
+            var symbol=markerpolySymbol;
+            this.map.graphics.add(new Graphic(polyevt.geometry, symbol))
+            toolbar.deactivate()
+            var queryTask = new QueryTask(this.map._layers.GenasysSAInputshosted_5866.url)
+            var queryparams= new Query()
+            queryparams.geometry= this.map.graphics.graphics[1].geometry
+            queryparams.where="1=1"
+            queryparams.outFields=['*']
+            queryparams.spatialRelationship= Query.SPATIAL_REL_CONTAINS
 
-      //there is no "locate-error" event in 2d-api
-      onLocateOrError: function (evt) {
-        if (evt.error) {
-          this.onLocateError(evt);
-        } else {
-          this.onLocate(evt);
-        }
-      },
-
-      onLocate: function (parameters) {
-        html.removeClass(this.placehoder, "locating");
-        if (this.geoLocate.useTracking) {
-          html.addClass(this.placehoder, "tracking");
-        }
-
-        if (parameters.error) {
-          this.onLocateError(parameters);
-        } else {
-          html.addClass(this.domNode, "onCenter");
-          this.neverLocate = false;
-
-          this._tryToShowCompass(parameters);
-        }
-      },
-
-      //compass
-      _tryToShowCompass: function (parameters) {
-        if (true !== this.config.locateButton.highlightLocation ||
-          true !== this.config.locateButton.useTracking) {
-          return;//1 or all false
-        }
-        if (true !== this.config.useCompass && true !== this.config.useAccCircle) {
-          return;//all false
-        }
-
-        this.compass = Compass.getInstance({ folderUrl: this.folderUrl, map: this.map, config: this.config });
-        this.compass.show(parameters, this.geoLocate);
-      },
-      _tryToCleanCompass: function () {
-        if (this.compass && this.compass.clean) {
-          this.compass.clean();
-        }
-      },
-      _tryToDestroyCompass: function () {
-        if (this.compass && this.compass.destroy) {
-          this.compass.destroy();
-        }
-      },
-
-      onLocateError: function(evt) {
-        console.error(evt.error);
-        this._tryToCleanCompass();
-        html.removeClass(this.placehoder, "locating");
-        html.removeClass(this.domNode, "onCenter");
-        html.removeClass(this.placehoder, "tracking");
-      },
-
-      _createGeoLocate: function() {
-        var json = this.config.locateButton;
-        json.map = this.map;
-        if (typeof(this.config.locateButton.useTracking) === "undefined") {
-          json.useTracking = true;
-        }
-        json.centerAt = true;
-        json.setScale = true;
-
-        var geoOptions = {
-          maximumAge: 0,
-          timeout: 15000,
-          enableHighAccuracy: true
-        };
-        if (json.geolocationOptions) {
-          json.geolocationOptions = lang.mixin(geoOptions, json.geolocationOptions);
-        }
-
-        //hack for issue,#11199
-        if (jimuUtils.has('ie') === 11) {
-          json.geolocationOptions.maximumAge = 300;
-          json.geolocationOptions.enableHighAccuracy = false;
-        }
-
-        this.geoLocate = new LocateButton(json);
-        this.geoLocate.startup();
-        //only 3d-api have error event
-        this.geoLocate.own(on(this.geoLocate, "locate", lang.hitch(this, this.onLocateOrError)));
-      },
-
-      _destroyGeoLocate: function() {
-        if (this.geoLocate) {
-          this.geoLocate.clear();
-          this.geoLocate.destroy();
-        }
-
-        this.geoLocate = null;
-      },
-      destroy: function () {
-        this._tryToCleanCompass();
-        this._tryToDestroyCompass();
-        // this._destroyDirectionHandler();
-        //this._destroyAccCircle();
-        this._destroyGeoLocate();
-        this.inherited(arguments);
-      }
-    });
+            queryTask
+            .execute(queryparams)
+            .addCallback(lang.hitch(this, function (response) {
+              console.log(response)
+              var tc = query("#select1")
+              arrayUtils.map(response.features, lang.hitch(this, function (feature) {
+                var innerhtml= "<b>Corp Name: </b>" + feature.attributes.USER_Corps + "<br> <b>Corp Address: </b>" + feature.attributes.USER_Cor_1 +  "<br> <b> Total Volunteers interested in responding to disasters: </b>"+ feature.attributes.USER_Appro +"<br> <b>Number of Kitchens: </b>" + feature.attributes.USER_Kitch + "<br> <b>Number of available canteens: </b>"+feature.attributes.USER_Cante+  "<br> <b>Amount & types of vehicles: </b>" +feature.attributes.USER_Oth_1 +"<br> <b> Meals a day: </b>" +feature.attributes.USER_Meals +"<br> <b> What is the Facility good at? </b>"+feature.attributes.USER_What_ + "<br> <b> Number of active EDS volunteers: </b>" + feature.attributes.USER_How_m +"<br>---------------------------------------------------------------------------<br>"
+                var testdiv= domConstruct.create("div", {id: "test", innerHTML: innerhtml }, tc[0], "first")
+                domStyle.set(testdiv, "font-family", "inherit")
+              }));
+            }))
+           }
+          }
+        });
     clazz.inPanel = false;
     clazz.hasUIFile = false;
 
