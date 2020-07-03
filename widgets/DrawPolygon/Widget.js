@@ -72,29 +72,25 @@ define([
             toolbar.deactivate()
             var queryTask = new QueryTask(this.map._layers.GenasysSAInputshosted_5866.url)
             var queryparams= new Query()
-            queryparams.geometry= this.map.graphics.graphics[1].geometry
+            queryparams.geometry= this.map.graphics.graphics[0].geometry
             queryparams.where="1=1"
             queryparams.outFields=['*']
+            queryparams.returnGeometry=true
             queryparams.spatialRelationship= Query.SPATIAL_REL_CONTAINS
 
             queryTask
             .execute(queryparams)
             .addCallback(lang.hitch(this, function (response) {
               var content=[]
+              domConstruct.empty('select1')
               var tc = query("#select1")
               arrayUtils.map(response.features, lang.hitch(this, function (feature) {
-                // arrayUtils.map(feature.attributes, lang.hitch(this, function (attribute){
-                //   console.log(attribute)
-                // }))
                 var innerhtml= "<p id = \"p2\"><b>Corp Name: </b>" + feature.attributes.USER_Corps + " </p><p id=\"p3\"> <b>Corp Address: </b>" +"<a id='zoomto' href=#>" +feature.attributes.USER_Cor_1 +"</a></p> <p id=\"p4\"> <b> Total Volunteers interested in responding to disasters: </b>"+ feature.attributes.USER_Appro +"</p> <p id=\"p5\"> <b>Number of Kitchens: </b>" + feature.attributes.USER_Kitch + "</p> <p id=\"p6\"> <b>Number of available canteens: </b>"+feature.attributes.USER_Cante+  "</p> <p id=\"p7\"><b>Amount & types of vehicles: </b>" +feature.attributes.USER_Oth_1 +"</p> <p id=\"p8\"> <b> Meals a day: </b>" +feature.attributes.USER_Meals +"</p> <p id=\"p9\"><b> What is the Facility good at? </b>"+feature.attributes.USER_What_ + "<p> <p id=\"p10\"><b> Number of active EDS volunteers: </b>" + feature.attributes.USER_How_m +"</p> <p>---------------------------------------------------------------------------</p>"
                 var testdiv= domConstruct.create("div", {id: "test", innerHTML: innerhtml }, tc[0], "first")
                 domStyle.set(testdiv, "font-family", "inherit")
                 var zoomtonode= query("#zoomto")
                 zoomtonode[0].addEventListener("click", lang.hitch(this, function(){
                   this.map.centerAndZoom(feature.geometry,18)
-                  var query = new Query();
-                  query.geometry=feature.geometry
-                  this.map._layers.GenasysSAInputshosted_5866.selectFeatures(query)
                 }))
               }));
             }))
