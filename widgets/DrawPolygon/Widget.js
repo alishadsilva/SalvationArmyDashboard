@@ -17,7 +17,7 @@
 define([
     'dojo/_base/declare',
     'jimu/BaseWidget',
-    "esri/dijit/LocateButton",
+    "esri/geometry/geometryEngine",
     'dojo/_base/html',
     'dojo/on',
     'dojo/query',
@@ -38,7 +38,7 @@ define([
     'jimu/dijit/Message',
     'dojo/touch'
   ],
-  function(declare, BaseWidget, LocateButton, html, on, query, lang, jimuUtils, Compass, a11y, Draw,SimpleLineSymbol, SimpleFillSymbol, Graphic, Color, Query, QueryTask, domConstruct, domStyle, arrayUtils) {
+  function(declare, BaseWidget, geometryEngine, html, on, query, lang, jimuUtils, Compass, a11y, Draw,SimpleLineSymbol, SimpleFillSymbol, Graphic, Color, Query, QueryTask, domConstruct, domStyle, arrayUtils) {
     var clazz = declare([BaseWidget], {
 
       name: 'DrawPolygon',
@@ -80,12 +80,22 @@ define([
             queryTask
             .execute(queryparams)
             .addCallback(lang.hitch(this, function (response) {
-              console.log(response)
+              var content=[]
               var tc = query("#select1")
               arrayUtils.map(response.features, lang.hitch(this, function (feature) {
-                var innerhtml= "<b>Corp Name: </b>" + feature.attributes.USER_Corps + "<br> <b>Corp Address: </b>" + feature.attributes.USER_Cor_1 +  "<br> <b> Total Volunteers interested in responding to disasters: </b>"+ feature.attributes.USER_Appro +"<br> <b>Number of Kitchens: </b>" + feature.attributes.USER_Kitch + "<br> <b>Number of available canteens: </b>"+feature.attributes.USER_Cante+  "<br> <b>Amount & types of vehicles: </b>" +feature.attributes.USER_Oth_1 +"<br> <b> Meals a day: </b>" +feature.attributes.USER_Meals +"<br> <b> What is the Facility good at? </b>"+feature.attributes.USER_What_ + "<br> <b> Number of active EDS volunteers: </b>" + feature.attributes.USER_How_m +"<br>---------------------------------------------------------------------------<br>"
+                // arrayUtils.map(feature.attributes, lang.hitch(this, function (attribute){
+                //   console.log(attribute)
+                // }))
+                var innerhtml= "<p id = \"p2\"><b>Corp Name: </b>" + feature.attributes.USER_Corps + " </p><p id=\"p3\"> <b>Corp Address: </b>" +"<a id='zoomto' href=#>" +feature.attributes.USER_Cor_1 +"</a></p> <p id=\"p4\"> <b> Total Volunteers interested in responding to disasters: </b>"+ feature.attributes.USER_Appro +"</p> <p id=\"p5\"> <b>Number of Kitchens: </b>" + feature.attributes.USER_Kitch + "</p> <p id=\"p6\"> <b>Number of available canteens: </b>"+feature.attributes.USER_Cante+  "</p> <p id=\"p7\"><b>Amount & types of vehicles: </b>" +feature.attributes.USER_Oth_1 +"</p> <p id=\"p8\"> <b> Meals a day: </b>" +feature.attributes.USER_Meals +"</p> <p id=\"p9\"><b> What is the Facility good at? </b>"+feature.attributes.USER_What_ + "<p> <p id=\"p10\"><b> Number of active EDS volunteers: </b>" + feature.attributes.USER_How_m +"</p> <p>---------------------------------------------------------------------------</p>"
                 var testdiv= domConstruct.create("div", {id: "test", innerHTML: innerhtml }, tc[0], "first")
                 domStyle.set(testdiv, "font-family", "inherit")
+                var zoomtonode= query("#zoomto")
+                zoomtonode[0].addEventListener("click", lang.hitch(this, function(){
+                  this.map.centerAndZoom(feature.geometry,18)
+                  var query = new Query();
+                  query.geometry=feature.geometry
+                  this.map._layers.GenasysSAInputshosted_5866.selectFeatures(query)
+                }))
               }));
             }))
            }
