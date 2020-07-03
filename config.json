@@ -55,8 +55,7 @@
         "version": "2.13",
         "id": "widgets_Scalebar_Widget_22",
         "name": "Scalebar",
-        "config": "configs/Scalebar/config_widgets_Scalebar_Widget_22.json",
-        "visible": false
+        "config": "configs/Scalebar/config_widgets_Scalebar_Widget_22.json"
       },
       {
         "uri": "widgets/Search/Widget",
@@ -143,7 +142,7 @@
         "name": "HomeButton"
       },
       {
-        "uri": "widgets/MyLocation/Widget",
+        "uri": "widgets/DrawPolygon/Widget",
         "position": {
           "left": 7,
           "top": 110,
@@ -151,7 +150,7 @@
         },
         "version": "2.13",
         "id": "widgets_MyLocation_Widget_30",
-        "name": "MyLocation",
+        "name": "DrawPolygon",
         "config": "configs/MyLocation/config_widgets_MyLocation_Widget_30.json"
       },
       {
@@ -184,10 +183,11 @@
         },
         "version": "2.13",
         "id": "widgets_ZoomSlider_Widget_33",
-        "name": "ZoomSlider"
+        "name": "ZoomSlider",
+        "config": null
       },
       {
-        "uri": "widgets/ExtentNavigate/Widget",
+        "uri": "widgets/ClearPolygon/Widget",
         "position": {
           "top": 148,
           "left": 7,
@@ -195,9 +195,8 @@
         },
         "version": "2.13",
         "id": "widgets_ExtentNavigate_Widget_34",
-        "name": "ExtentNavigate",
-        "config": null,
-        "visible": false
+        "name": "ClearPolygon",
+        "config": null
       },
       {
         "uri": "widgets/FullScreen/Widget",
@@ -209,7 +208,8 @@
         },
         "version": "2.13",
         "id": "widgets_FullScreen_Widget_35",
-        "name": "FullScreen"
+        "name": "FullScreen",
+        "config": null
       }
     ],
     "groups": [
@@ -237,8 +237,7 @@
             "id": "widgets_PopUp_Widget_36"
           }
         ],
-        "label": "Group 0",
-        "icon": "widgets/PopUp/images/icon.png?wab_dv=2.13"
+        "label": "Group 0"
       }
     ],
     "panel": {
@@ -363,7 +362,7 @@
           "version": "2.13"
         },
         {
-          "uri": "widgets/MyLocation/Widget",
+          "uri": "widgets/DrawPolygon/Widget",
           "inPanel": false,
           "position": {
             "left": 7,
@@ -396,7 +395,7 @@
           "version": "2.13"
         },
         {
-          "uri": "widgets/ExtentNavigate/Widget",
+          "uri": "widgets/ClearPolygon/Widget",
           "visible": false,
           "position": {
             "top": 148,
@@ -1053,7 +1052,7 @@
           "gid": "widgetOnScreen"
         },
         {
-          "uri": "widgets/MyLocation/Widget",
+          "uri": "widgets/DrawPolygon/Widget",
           "position": {
             "left": 7,
             "top": 110,
@@ -1076,10 +1075,10 @@
           "hasSettingLocale": true,
           "hasSettingStyle": true,
           "keepConfigAfterMapSwitched": true,
-          "name": "MyLocation",
-          "label": "My Location",
+          "name": "DrawPolygon",
+          "label": "Draw Polygon",
           "manifest": {
-            "name": "MyLocation",
+            "name": "DrawPolygon",
             "platform": "HTML",
             "version": "2.13",
             "wabVersion": "2.13",
@@ -1109,29 +1108,15 @@
             "amdFolder": "widgets/MyLocation/",
             "url": "/webappbuilder/apps/19/widgets/MyLocation/",
             "i18nLabels": {
-              "en-us": "My Location"
+              "en-us": "Draw Polygon"
             },
-            "icon": "/webappbuilder/apps/19/widgets/MyLocation/images/icon.png?wab_dv=2.13",
-            "thumbnail": "/webappbuilder/apps/19/widgets/MyLocation/images/thumbnail.png",
             "support2D": true,
-            "label": "My Location"
+            "label": "Draw Polygon"
           },
-          "icon": "/webappbuilder/apps/19/widgets/MyLocation/images/icon.png?wab_dv=2.13",
-          "thumbnail": "/webappbuilder/apps/19/widgets/MyLocation/images/thumbnail.png",
           "folderUrl": "/webappbuilder/apps/19/widgets/MyLocation/",
           "amdFolder": "widgets/MyLocation/",
           "configFile": "widgets/MyLocation/config.json",
           "isDefaultConfig": true,
-          "config": {
-            "locateButton": {
-              "geolocationOptions": {
-                "timeout": 15000
-              },
-              "highlightLocation": true,
-              "useTracking": true,
-              "scale": 50000
-            }
-          },
           "visible": true,
           "isOnScreen": true,
           "gid": "widgetOnScreen"
@@ -1429,7 +1414,7 @@
           "gid": "widgetOnScreen"
         },
         {
-          "uri": "widgets/ExtentNavigate/Widget",
+          "uri": "widgets/ClearPolygon/Widget",
           "visible": false,
           "position": {
             "top": 190,
@@ -1452,14 +1437,14 @@
           "hasSettingLocale": true,
           "hasSettingStyle": true,
           "keepConfigAfterMapSwitched": true,
-          "name": "ExtentNavigate",
-          "label": "Extent Navigate",
+          "name": "ClearPolygon",
+          "label": "Clear Polygon",
           "manifest": {
-            "name": "ExtentNavigate",
+            "name": "ClearPolygon",
             "platform": "HTML",
             "version": "2.13",
             "wabVersion": "2.13",
-            "author": "Esri R&D Center Beijing",
+            "author": "Alisha D",
             "description": "",
             "copyright": "",
             "license": "http://www.apache.org/licenses/LICENSE-2.0",
@@ -1485,12 +1470,12 @@
             "amdFolder": "widgets/ExtentNavigate/",
             "url": "/webappbuilder/apps/19/widgets/ExtentNavigate/",
             "i18nLabels": {
-              "en-us": "Extent Navigate"
+              "en-us": "Clear Polygon"
             },
             "icon": "/webappbuilder/apps/19/widgets/ExtentNavigate/images/icon.png?wab_dv=2.13",
             "thumbnail": "/webappbuilder/apps/19/widgets/ExtentNavigate/images/thumbnail.png",
             "support2D": true,
-            "label": "Extent Navigate"
+            "label": "Clear Polygon"
           },
           "icon": "/webappbuilder/apps/19/widgets/ExtentNavigate/images/icon.png?wab_dv=2.13",
           "thumbnail": "/webappbuilder/apps/19/widgets/ExtentNavigate/images/thumbnail.png",

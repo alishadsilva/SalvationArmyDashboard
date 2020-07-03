@@ -5,11 +5,11 @@
 }
 
 .jimu-widget-homebutton .HomeButton .home {
-  background-color: #555;
+  background-color: lightgray;
 }
 
 .jimu-widget-homebutton.inHome {
-	background-color: #000;
+	background-color: lightgray;
 }
 
 .jimu-widget-homebutton .HomeButton .home:hover {
