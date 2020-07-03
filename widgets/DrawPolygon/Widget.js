@@ -58,7 +58,8 @@ define([
       },
 
       onLocationClick: function(evt) {
-        console.log("Location test")
+        // console.log("Location test")
+        this.map.graphics.clear()
         var markerpolySymbol = new SimpleFillSymbol();
             markerpolySymbol.setColor(new Color([255,255,0,0.25]));
 
