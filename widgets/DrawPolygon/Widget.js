@@ -68,6 +68,7 @@ define([
             toolbar.on("draw-end", addGraphic);
 
           function addGraphic(polyevt){
+            toolbar.deactivate()
             var symbol=markerpolySymbol;
             this.map.graphics.add(new Graphic(polyevt.geometry, symbol))
             toolbar.deactivate()
