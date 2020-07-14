@@ -27,9 +27,14 @@ define(['dojo/_base/declare',
 "dojo/parser",
 "dojo/dom-construct",
 "dojox/layout/TableContainer",
+"dijit/form/TextBox",
+"dijit/form/CheckBox",
+"dijit/registry",
+"dijit/Dialog",
+"dijit/form/Button",
 "dojo/domReady!"
 ],
-function(declare, _TemplatedMixin, _WidgetsInTemplateMixin, domStyle, lang, BaseWidget, Query, QueryTask, geometryEngine, arrayUtils, query, parser, domConstruct, TableContainer) {
+function(declare, _TemplatedMixin, _WidgetsInTemplateMixin, domStyle, lang, BaseWidget, Query, QueryTask, geometryEngine, arrayUtils, query, parser, domConstruct, TableContainer, TextBox, CheckBox, registry, Dialog) {
   //To create a widget, you need to derive from BaseWidget.
   return declare([BaseWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
@@ -42,14 +47,11 @@ function(declare, _TemplatedMixin, _WidgetsInTemplateMixin, domStyle, lang, Base
 
     startup: function() {
       this.inherited(arguments);
-      var programmatic = new TableContainer(
-        {
-          cols: 1
-        }, dojo.byId("select1"))
-
+      
       this.map.on("click", lang.hitch(this, function queryfeatures(evt){
-        // console.log(evt.mapPoint)
         domConstruct.empty("select1")
+        registry.byId('sendselected').set("disabled", false)
+        registry.byId('selectall').set("disabled", false)
         queryTask= new QueryTask("https://services2.arcgis.com/ffEKAbD1SATUihBS/arcgis/rest/services/GenasysSAInputshosted/FeatureServer/0")
           var queryparams= new Query()
           queryparams.where="1=1"
@@ -66,22 +68,111 @@ function(declare, _TemplatedMixin, _WidgetsInTemplateMixin, domStyle, lang, Base
               arrayUtils.map(response.features, lang.hitch(this, function (feature) {
                 var num=geometryEngine.distance(evt.mapPoint, feature.geometry, "miles")
                 var distance= num.toFixed(2)
-                // arrayUtils.map(feature.attributes, lang.hitch(this, function (attribute){
-                //   console.log(attribute)
-                // }))
-                var innerhtml= "<p id =\"p1\"><b>Distance: </b>"+ distance +" mi </p> <p id = \"p2\"><b>Corp Name: </b>" + feature.attributes.USER_Corps + " </p><p id=\"p3\"> <b>Corp Address: </b>" +"<a id='zoomto' href=#>" +feature.attributes.USER_Cor_1 +"</a></p> <p id=\"p4\"> <b> Total Volunteers interested in responding to disasters: </b>"+ feature.attributes.USER_Appro +"</p> <p id=\"p5\"> <b>Number of Kitchens: </b>" + feature.attributes.USER_Kitch + "</p> <p id=\"p6\"> <b>Number of available canteens: </b>"+feature.attributes.USER_Cante+  "</p> <p id=\"p7\"><b>Amount & types of vehicles: </b>" +feature.attributes.USER_Oth_1 +"</p> <p id=\"p8\"> <b> Meals a day: </b>" +feature.attributes.USER_Meals +"</p> <p id=\"p9\"><b> What is the Facility good at? </b>"+feature.attributes.USER_What_ + "<p> <p id=\"p10\"><b> Number of active EDS volunteers: </b>" + feature.attributes.USER_How_m +"</p> <p>---------------------------------------------------------------------------</p>"
-                var testdiv= domConstruct.create("div", {id: "test", innerHTML: innerhtml }, tc[0], "first")
-                domStyle.set(testdiv, "font-family", "inherit")
-                var zoomtonode= query("#zoomto")
+                var id= "cb_" + feature.attributes.FID
+                
+                var innerhtml= "<p id =\"p1\"><b>Distance: </b>"+ distance +" mi </p> <p id = \"p2\"><b>Corp Name: </b>" + feature.attributes.USER_Corps + " </p><p id=\"p3\"> <b>Corp Address: </b>" +"<a id='zoomto" +feature.attributes.FID+ "' href=#>" +feature.attributes.USER_Cor_1 +"</a></p> <p id=\"p4\"> <b> Total Volunteers interested in responding to disasters: </b>"+ feature.attributes.USER_Appro +"</p> <p id=\"p5\"> <b>Number of Kitchens: </b>" + feature.attributes.USER_Kitch + "</p> <p id=\"p6\"> <b>Number of available canteens: </b>"+feature.attributes.USER_Cante+  "</p> <p id=\"p7\"><b>Amount & types of vehicles: </b>" +feature.attributes.USER_Oth_1 +"</p> <p id=\"p8\"> <b> Meals a day: </b>" +feature.attributes.USER_Meals +"</p> <p id=\"p9\"><b> What is the Facility good at? </b>"+feature.attributes.USER_What_ + "<p> <p id=\"p10\"><b> Number of active EDS volunteers: </b>" + feature.attributes.USER_How_m +"</p>"
+
+                var label= domConstruct.create("label", {for: id},tc[0], "after")
+                var labeldiv= domConstruct.create("div",{id: "labeldiv",style: {padding: "2%", border: "1px solid", height:"300px"}})
+
+                var mycb = registry.byId(id)
+                if (mycb){
+                  mycb.destroy()
+                }
+
+                var checkbox= domConstruct.create("input", {id: id})
+
+                var checkboxdiv= domConstruct.create("div", {class: "checkbox", style:{width: "10%", float: "left"}})
+
+                var contentdiv= domConstruct.create("div",{class: "contentdiv", style:{float: "right"}, innerHTML: innerhtml})
+
+                labeldiv.appendChild(contentdiv)
+                checkboxdiv.appendChild(checkbox)
+                labeldiv.appendChild(checkboxdiv)
+                label.appendChild(labeldiv)
+                tc[0].appendChild(label)
+                
+                var dojocheckbox = new CheckBox({
+                  name: id,
+                  value: feature.attributes.FID,
+                  checked: false,
+              }, checkbox.id)
+
+              var zoomtoid= "#zoomto"+ feature.attributes.FID 
+
+              var zoomtonode= query(zoomtoid)
                 zoomtonode[0].addEventListener("click", lang.hitch(this, function(){
                   this.map.centerAndZoom(feature.geometry,18)
-                  var query = new Query();
-                  query.geometry=feature.geometry
-                  this.map._layers.GenasysSAInputshosted_5866.selectFeatures(query)
                 }))
               }));
+
             }))
-          }))   
+          }))
+          // var allcb= dojo.query('#select1 > input[type=checkbox]:checked')
+          var selectallcb= dojo.query("#selectall")
+      
+          selectallcb[0].addEventListener("change", lang.hitch(this, function(){
+            var cblist=dojo.query('input', 'select1')
+            cblist.forEach(function (cbnode){
+              console.log(cbnode.id)
+              var cb=registry.byId(cbnode.id)
+              if (!cb.checked){
+                cb.set("checked", !cb.checked);
+                cbnode.checked=true
+                var ncb = document.getElementById(cbnode.id);  
+                ncb.checked = !ncb.checked;
+              }
+            })
+              if (!registry.byId('selectall').checked){
+                cblist.forEach(function (cbnode){
+                  var cb=registry.byId(cbnode.id)
+                  if (cb.checked){
+                    cb.set("checked", !cb.checked);
+                    cbnode.checked=false
+                    var ncb = document.getElementById(cbnode.id);  
+                    ncb.checked = !ncb.checked;
+                }
+              })
+            }
+            if (registry.byId('selectall').checked){
+              registry.byId('sendbutton').set("disabled", false)
+            }
+            else {
+              registry.byId('sendbutton').set("disabled", true)
+            }
+          }))
+
+          
+          myDialog = new Dialog({
+            title: "Notification",
+            style: "width: 300px"
+        })
+        
+        var sendselected= query('#sendselected')
+        sendselected[0].addEventListener("change", lang.hitch(this, function(){
+          if (registry.byId('sendselected').checked){
+            registry.byId('sendbutton').set("disabled", false)
+          }
+          else {
+            registry.byId('sendbutton').set("disabled", true)
+          }
+        }))
+
+
+        var sendbutton= query("#sendbutton")
+        sendbutton[0].addEventListener("click", lang.hitch(this, function(){
+          var message=registry.byId('message').value
+          // var allcb=dojo.query('input:checked', 'select1')
+          var cblist=dojo.query('input', 'select1')
+          var count=0
+          cblist.forEach(function (cbnode){
+            if (registry.byId(cbnode.id).checked){
+              count+=1
+            }
+          })
+          myDialog.setContent("Message: "+ message + "<br>"+ count + " service centers notified.")
+          myDialog.show()
+        }))
       console.log('startup');
     },
 
