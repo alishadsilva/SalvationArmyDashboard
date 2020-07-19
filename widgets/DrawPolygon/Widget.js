@@ -35,12 +35,10 @@ define([
     "dojo/dom-construct",
     "dojo/dom-style",
     "dojo/_base/array",
-    "dijit/registry",
-    "dijit/form/CheckBox",
     'jimu/dijit/Message',
     'dojo/touch'
   ],
-  function(declare, BaseWidget, geometryEngine, html, on, query, lang, jimuUtils, Compass, a11y, Draw,SimpleLineSymbol, SimpleFillSymbol, Graphic, Color, Query, QueryTask, domConstruct, domStyle, arrayUtils, registry, CheckBox) {
+  function(declare, BaseWidget, geometryEngine, html, on, query, lang, jimuUtils, Compass, a11y, Draw,SimpleLineSymbol, SimpleFillSymbol, Graphic, Color, Query, QueryTask, domConstruct, domStyle, arrayUtils) {
     var clazz = declare([BaseWidget], {
 
       name: 'DrawPolygon',
@@ -87,42 +85,12 @@ define([
             .addCallback(lang.hitch(this, function (response) {
               var content=[]
               domConstruct.empty('select1')
-              registry.byId('sendselected').set("disabled", false)
-              registry.byId('selectall').set("disabled", false)
               var tc = query("#select1")
               arrayUtils.map(response.features, lang.hitch(this, function (feature) {
-                var id= "cb_" + feature.attributes.FID
-                var innerhtml= "<p id = \"p2\"><b>Corp Name: </b>" + feature.attributes.USER_Corps + " </p><p id=\"p3\"> <b>Corp Address: </b>" +"<a id='zoomto" +feature.attributes.FID+ "' href=#>"+feature.attributes.USER_Cor_1 +"</a></p> <p id=\"p4\"> <b> Total Volunteers interested in responding to disasters: </b>"+ feature.attributes.USER_Appro +"</p> <p id=\"p5\"> <b>Number of Kitchens: </b>" + feature.attributes.USER_Kitch + "</p> <p id=\"p6\"> <b>Number of available canteens: </b>"+feature.attributes.USER_Cante+  "</p> <p id=\"p7\"><b>Amount & types of vehicles: </b>" +feature.attributes.USER_Oth_1 +"</p> <p id=\"p8\"> <b> Meals a day: </b>" +feature.attributes.USER_Meals +"</p> <p id=\"p9\"><b> What is the Facility good at? </b>"+feature.attributes.USER_What_ + "<p> <p id=\"p10\"><b> Number of active EDS volunteers: </b>" + feature.attributes.USER_How_m +"</p>"
-
-                var label= domConstruct.create("label", {for: id},tc[0], "after")
-                var labeldiv= domConstruct.create("div",{id: "labeldiv",style: {padding: "2%", border: "1px solid", height:"300px"}})
-
-                var mycb = registry.byId(id)
-                if (mycb){
-                  mycb.destroy()
-                }
-
-                var checkbox= domConstruct.create("input", {id: id})
-
-                var checkboxdiv= domConstruct.create("div", {class: "checkbox", style:{width: "10%", float: "left"}})
-
-                var contentdiv= domConstruct.create("div",{class: "contentdiv", style:{float: "right"}, innerHTML: innerhtml})
-
-                labeldiv.appendChild(contentdiv)
-                checkboxdiv.appendChild(checkbox)
-                labeldiv.appendChild(checkboxdiv)
-                label.appendChild(labeldiv)
-                tc[0].appendChild(label)
-                
-                var dojocheckbox = new CheckBox({
-                  name: id,
-                  value: feature.attributes.FID,
-                  checked: false,
-              }, checkbox.id)
-
-              var zoomtoid= "#zoomto"+ feature.attributes.FID 
-
-              var zoomtonode= query(zoomtoid)
+                var innerhtml= "<p id = \"p2\"><b>Corp Name: </b>" + feature.attributes.USER_Corps + " </p><p id=\"p3\"> <b>Corp Address: </b>" +"<a id='zoomto' href=#>" +feature.attributes.USER_Cor_1 +"</a></p> <p id=\"p4\"> <b> Total Volunteers interested in responding to disasters: </b>"+ feature.attributes.USER_Appro +"</p> <p id=\"p5\"> <b>Number of Kitchens: </b>" + feature.attributes.USER_Kitch + "</p> <p id=\"p6\"> <b>Number of available canteens: </b>"+feature.attributes.USER_Cante+  "</p> <p id=\"p7\"><b>Amount & types of vehicles: </b>" +feature.attributes.USER_Oth_1 +"</p> <p id=\"p8\"> <b> Meals a day: </b>" +feature.attributes.USER_Meals +"</p> <p id=\"p9\"><b> What is the Facility good at? </b>"+feature.attributes.USER_What_ + "<p> <p id=\"p10\"><b> Number of active EDS volunteers: </b>" + feature.attributes.USER_How_m +"</p> <p>---------------------------------------------------------------------------</p>"
+                var testdiv= domConstruct.create("div", {id: "test", innerHTML: innerhtml }, tc[0], "first")
+                domStyle.set(testdiv, "font-family", "inherit")
+                var zoomtonode= query("#zoomto")
                 zoomtonode[0].addEventListener("click", lang.hitch(this, function(){
                   this.map.centerAndZoom(feature.geometry,18)
                 }))

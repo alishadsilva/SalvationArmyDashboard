@@ -1,16 +1,8 @@
 <div>
-  <label for="select1">Click on the map to view Services within 20 miles.</label>
+  <label for="select1" style="font-family: inherit;">Click on the map to view Services within 20 miles.</label>
   <br>
   <br>
   <div id="select1"></div>
-  <div id="footer">
-    <div data-dojo-type="dojox.layout.TableContainer" data-dojo-props="cols:2" id="display1">
-      <div id = "message" data-dojo-type="dijit.form.TextBox" colspan= "2" title="Enter Message" value=" " ></div>
-      <div data-dojo-type="dijit.form.CheckBox" id="sendselected" disabled= "true" colspan= "2 "title="Send Selected"></div>
-      <div data-dojo-type="dijit.form.CheckBox" id="selectall" disabled="true" title="Select All"></div>
-      <button id="sendbutton" data-dojo-type="dijit/form/Button" type="button" disabled= "true", style="float: right;" >Send</button>
-    </div>
-  </div> 
   <div data-dojo-attach-point="mapIdNode"></div>
   <div data-dojo-attach-point="vertexCount"></div>
 </div>

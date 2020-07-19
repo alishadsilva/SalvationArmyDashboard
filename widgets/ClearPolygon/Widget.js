@@ -23,11 +23,10 @@ define([
     'dojo/_base/lang',
     "./a11y/Widget",
     "dojo/dom-construct",
-    "dijit/registry",
     'jimu/dijit/Message',
     'dojo/touch'
   ],
-  function(declare, BaseWidget, html, on, query, lang, a11y,domConstruct, registry) {
+  function(declare, BaseWidget, html, on, query, lang, a11y,domConstruct) {
     var clazz = declare([BaseWidget], {
 
       name: 'ClearPolygon',
@@ -48,9 +47,8 @@ define([
 
       onClearClick: function(evt) {
         this.map.graphics.clear()
+        // dojo.empty("display1")
         domConstruct.empty("select1")
-        registry.byId('sendselected').set("disabled", true)
-        registry.byId('selectall').set("disabled", true)
           }
         });
     clazz.inPanel = false;
