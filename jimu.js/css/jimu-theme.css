@@ -25,8 +25,8 @@
 }
 /* css for jimu-main- */
 .jimu-main-background{
-  background-color: #485566;
-  background-color: rgba(72, 85, 102, 0.9);
+  /* background-color: rgba(0,13,33,0.5); */
+  background-color:rgba(0,13,33,0.2);
 }
 
 .jimu-main-font{
@@ -82,7 +82,7 @@
 .jimu-widget{
   font-size: 12px;
   font-weight: normal;
-  color: #000;
+  color: white;
 }
 
 .jimu-widget-title{

@@ -77,7 +77,8 @@ function(declare, lang, array, html, topic, domConstruct, domGeometry,
             backgroundColor: '#EEEEEE',
             overflow: 'hidden',
             minWidth:'1px',
-            minHeight:'1px'
+            minHeight:'1px',
+            left:'0px',
           }, utils.getPositionStyle(this.appConfig.map.position))
         }, this.layoutId);
       }
@@ -318,6 +319,7 @@ function(declare, lang, array, html, topic, domConstruct, domGeometry,
       return this.panelManager.showPanel(groupJson).then(lang.hitch(this, function(panel){
         panel.configId = groupJson.id;
         this.onScreenGroupPanels.push(panel);
+        this.panelManager.minimizePanel(panel)
         return panel;
       }));
     }

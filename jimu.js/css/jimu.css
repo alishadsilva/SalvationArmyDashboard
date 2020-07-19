@@ -1457,7 +1457,7 @@ widget:jimu-w
   overflow-y: auto;
   position: relative;
   padding: 14px 14px 14px 14px;
-  background-color: white;
+  background-color: rgba(0,13,33,0.2);
 }
 .jimu-ismobile .jimu-widget-frame.jimu-container{
   padding: 0 14px;

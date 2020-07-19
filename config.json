@@ -48,7 +48,7 @@
       {
         "uri": "widgets/Scalebar/Widget",
         "position": {
-          "left": 7,
+          "right": 7,
           "bottom": 40,
           "relativeTo": "map"
         },
@@ -60,7 +60,7 @@
       {
         "uri": "widgets/Search/Widget",
         "position": {
-          "left": 55,
+          "right": 55,
           "top": 5,
           "relativeTo": "map"
         },
@@ -72,7 +72,7 @@
       {
         "uri": "widgets/Coordinate/Widget",
         "position": {
-          "left": 7,
+          "right": 7,
           "bottom": 17,
           "relativeTo": "map"
         },
@@ -84,7 +84,7 @@
       },
       {
         "position": {
-          "left": 105,
+          "right": 105,
           "top": 45,
           "relativeTo": "map"
         },
@@ -96,7 +96,7 @@
       },
       {
         "position": {
-          "left": 55,
+          "right": 55,
           "top": 45,
           "relativeTo": "map"
         },
@@ -110,7 +110,7 @@
       },
       {
         "position": {
-          "left": 155,
+          "right": 155,
           "top": 45,
           "relativeTo": "map"
         },
@@ -133,7 +133,7 @@
       {
         "uri": "widgets/HomeButton/Widget",
         "position": {
-          "left": 7,
+          "right": 7,
           "top": 75,
           "relativeTo": "map"
         },
@@ -144,7 +144,7 @@
       {
         "uri": "widgets/DrawPolygon/Widget",
         "position": {
-          "left": 7,
+          "right": 7,
           "top": 110,
           "relativeTo": "map"
         },
@@ -178,7 +178,7 @@
         "uri": "widgets/ZoomSlider/Widget",
         "position": {
           "top": 5,
-          "left": 7,
+          "right": 7,
           "relativeTo": "map"
         },
         "version": "2.13",
@@ -190,7 +190,7 @@
         "uri": "widgets/ClearPolygon/Widget",
         "position": {
           "top": 148,
-          "left": 7,
+          "right": 7,
           "relativeTo": "map"
         },
         "version": "2.13",
@@ -303,7 +303,7 @@
         {
           "uri": "widgets/Scalebar/Widget",
           "position": {
-            "left": 7,
+            "right": 7,
             "bottom": 40,
             "relativeTo": "map"
           },
@@ -312,7 +312,7 @@
         {
           "uri": "widgets/Search/Widget",
           "position": {
-            "left": 55,
+            "right": 55,
             "top": 5
           },
           "version": "2.13"
@@ -320,7 +320,7 @@
         {
           "uri": "widgets/Coordinate/Widget",
           "position": {
-            "left": 7,
+            "right": 7,
             "bottom": 17,
             "relativeTo": "map"
           },
@@ -328,19 +328,19 @@
         },
         {
           "position": {
-            "left": 55,
+            "right": 55,
             "top": 45
           }
         },
         {
           "position": {
-            "left": 105,
+            "right": 105,
             "top": 45
           }
         },
         {
           "position": {
-            "left": 155,
+            "right": 155,
             "top": 45
           }
         },
@@ -356,7 +356,7 @@
           "uri": "widgets/HomeButton/Widget",
           "inPanel": false,
           "position": {
-            "left": 7,
+            "right": 7,
             "top": 75
           },
           "version": "2.13"
@@ -365,7 +365,7 @@
           "uri": "widgets/DrawPolygon/Widget",
           "inPanel": false,
           "position": {
-            "left": 7,
+            "right": 7,
             "top": 110
           },
           "version": "2.13"
@@ -390,7 +390,7 @@
           "visible": true,
           "position": {
             "top": 5,
-            "left": 7
+            "right": 7
           },
           "version": "2.13"
         },
@@ -399,7 +399,7 @@
           "visible": false,
           "position": {
             "top": 148,
-            "left": 7
+            "right": 7
           },
           "version": "2.13"
         },
@@ -594,7 +594,7 @@
         {
           "uri": "widgets/Scalebar/Widget",
           "position": {
-            "left": 7,
+            "right": 7,
             "bottom": 25,
             "relativeTo": "map"
           },
@@ -676,7 +676,7 @@
         {
           "uri": "widgets/Search/Widget",
           "position": {
-            "left": 55,
+            "right": 55,
             "top": 5,
             "relativeTo": "map"
           },
@@ -755,7 +755,7 @@
         {
           "uri": "widgets/Coordinate/Widget",
           "position": {
-            "left": 7,
+            "right": 7,
             "bottom": 5,
             "relativeTo": "map"
           },
@@ -834,7 +834,7 @@
         },
         {
           "position": {
-            "left": 55,
+            "right": 55,
             "top": 45,
             "relativeTo": "map"
           },
@@ -846,7 +846,7 @@
         },
         {
           "position": {
-            "left": 105,
+            "right": 105,
             "top": 45,
             "relativeTo": "map"
           },
@@ -858,7 +858,7 @@
         },
         {
           "position": {
-            "left": 155,
+            "right": 155,
             "top": 45,
             "relativeTo": "map"
           },
@@ -870,7 +870,7 @@
         },
         {
           "position": {
-            "left": 205,
+            "right": 205,
             "top": 45,
             "relativeTo": "map"
           },
@@ -882,7 +882,7 @@
         },
         {
           "position": {
-            "left": 255,
+            "right": 255,
             "top": 45,
             "relativeTo": "map"
           },
@@ -979,7 +979,7 @@
         {
           "uri": "widgets/HomeButton/Widget",
           "position": {
-            "left": 7,
+            "right": 7,
             "top": 75,
             "relativeTo": "map"
           },
@@ -1054,7 +1054,7 @@
         {
           "uri": "widgets/DrawPolygon/Widget",
           "position": {
-            "left": 7,
+            "right": 7,
             "top": 110,
             "relativeTo": "map"
           },
@@ -1343,7 +1343,7 @@
           "visible": true,
           "position": {
             "top": 5,
-            "left": 7,
+            "right": 7,
             "relativeTo": "map"
           },
           "version": "2.13",
@@ -1418,7 +1418,7 @@
           "visible": false,
           "position": {
             "top": 190,
-            "left": 7,
+            "right": 7,
             "relativeTo": "map"
           },
           "id": "widgets_ExtentNavigate_Widget_16",
@@ -1493,7 +1493,7 @@
           "visible": false,
           "position": {
             "top": 150,
-            "left": 7,
+            "right": 7,
             "relativeTo": "map"
           },
           "version": "2.13",
@@ -1800,14 +1800,14 @@
         "widgets": {
           "widgets/Scalebar/Widget": {
             "position": {
-              "left": 7,
+              "right": 7,
               "bottom": 40
             },
             "version": "1.4"
           },
           "widgets/Coordinate/Widget": {
             "position": {
-              "left": 7,
+              "right": 7,
               "bottom": 17
             },
             "version": "1.4"
