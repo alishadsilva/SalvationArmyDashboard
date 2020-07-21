@@ -20,11 +20,12 @@ define([
   'dojo/topic',
   'dojo/on',
   'dojo/query',
+  "dojo/dom-style",
   './FeatureActionManager',
   './utils',
   './dijit/FeatureActionPopupMenu',
   './RelatedRecordsPopupProjector'
-  ], function(declare, lang, html, topic, on, query, FeatureActionManager,
+  ], function(declare, lang, html, topic, on, query, domStyle, FeatureActionManager,
   jimuUtils, PopupMenu, RelatedRecordsPopupProjector) {
     var instance = null;
     var clazz = declare(null, {
@@ -101,18 +102,20 @@ define([
 
       _onSelectionChange: function(evt){
         this.selectedFeature = evt.target.getSelectedFeature();
+        // var testnode= query(".esriPopupWrapper")
+        //   domStyle.set(testnode[0], "display", "none");
         if(!this.selectedFeature){
           this._disablePopupMenu();
           return;
         }
         this.initPopupMenu([this.selectedFeature]);
 
-        var selectedFeatureLayer = this.selectedFeature.getLayer();
-        var hasInfoTemplate = this.selectedFeature.infoTemplate ||
-                              (selectedFeatureLayer && selectedFeatureLayer.infoTemplate);
-        if(hasInfoTemplate) {
-          this._createRelatedRecordsPopupProjector(this.selectedFeature);
-        }
+        // var selectedFeatureLayer = this.selectedFeature.getLayer();
+        // var hasInfoTemplate = this.selectedFeature.infoTemplate ||
+        //                       (selectedFeatureLayer && selectedFeatureLayer.infoTemplate);
+        // if(hasInfoTemplate) {
+        //   this._createRelatedRecordsPopupProjector(this.selectedFeature);
+        // }
       },
 
       _disablePopupMenu: function() {

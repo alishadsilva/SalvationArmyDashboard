@@ -360,8 +360,10 @@ div.attribute-custom-style{
 /***************************************************************************
 classes can be used in the html
 ****************************************************************************/
-.jimu-main-background{background-color: #485566;}
-.jimu-main-background-2{background-color: white;}
+.jimu-main-background{background-color: rgba(0,13,33,0.2);}
+.jimu-main-background-2{
+  background-color: rgba(0,13,33,0.2) !important
+}
 
 .jimu-ellipsis{
   overflow: hidden;

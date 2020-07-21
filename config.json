@@ -18,7 +18,7 @@
       "useLogo": false
     },
     "customStyles": {
-      "mainBackgroundColor": "#dfdfdf"
+      "mainBackgroundColor": "rgba(0,13,33,0.2)"
     }
   },
   "portalUrl": "https://genasys.maps.arcgis.com",
@@ -61,7 +61,7 @@
         "uri": "widgets/Search/Widget",
         "position": {
           "right": 55,
-          "top": 5,
+          "top": 45,
           "relativeTo": "map"
         },
         "version": "2.13",
@@ -97,7 +97,7 @@
       {
         "position": {
           "right": 55,
-          "top": 45,
+          "top": 85,
           "relativeTo": "map"
         },
         "placeholderIndex": 1,
@@ -111,7 +111,7 @@
       {
         "position": {
           "right": 155,
-          "top": 45,
+          "top": 85,
           "relativeTo": "map"
         },
         "placeholderIndex": 2,
@@ -134,7 +134,7 @@
         "uri": "widgets/HomeButton/Widget",
         "position": {
           "right": 7,
-          "top": 75,
+          "top": 115,
           "relativeTo": "map"
         },
         "version": "2.13",
@@ -145,7 +145,7 @@
         "uri": "widgets/DrawPolygon/Widget",
         "position": {
           "right": 7,
-          "top": 110,
+          "top": 150,
           "relativeTo": "map"
         },
         "version": "2.13",
@@ -177,7 +177,7 @@
       {
         "uri": "widgets/ZoomSlider/Widget",
         "position": {
-          "top": 5,
+          "top": 45,
           "right": 7,
           "relativeTo": "map"
         },
@@ -189,7 +189,7 @@
       {
         "uri": "widgets/ClearPolygon/Widget",
         "position": {
-          "top": 148,
+          "top": 188,
           "right": 7,
           "relativeTo": "map"
         },
@@ -252,7 +252,7 @@
     "2D": true,
     "position": {
       "left": 0,
-      "top": 40,
+      "top": 0,
       "right": 0,
       "bottom": 0
     },
@@ -313,7 +313,7 @@
           "uri": "widgets/Search/Widget",
           "position": {
             "right": 55,
-            "top": 5
+            "top": 45
           },
           "version": "2.13"
         },
@@ -357,7 +357,7 @@
           "inPanel": false,
           "position": {
             "right": 7,
-            "top": 75
+            "top": 115
           },
           "version": "2.13"
         },
@@ -366,7 +366,7 @@
           "inPanel": false,
           "position": {
             "right": 7,
-            "top": 110
+            "top": 150
           },
           "version": "2.13"
         },
@@ -398,7 +398,7 @@
           "uri": "widgets/ClearPolygon/Widget",
           "visible": false,
           "position": {
-            "top": 148,
+            "top": 188,
             "right": 7
           },
           "version": "2.13"
@@ -433,7 +433,7 @@
     "map": {
       "position": {
         "left": 0,
-        "top": 40,
+        "top": 0,
         "right": 0,
         "bottom": 0
       }
@@ -677,7 +677,7 @@
           "uri": "widgets/Search/Widget",
           "position": {
             "right": 55,
-            "top": 5,
+            "top": 45,
             "relativeTo": "map"
           },
           "version": "2.13",
@@ -980,7 +980,7 @@
           "uri": "widgets/HomeButton/Widget",
           "position": {
             "right": 7,
-            "top": 75,
+            "top": 115,
             "relativeTo": "map"
           },
           "version": "2.13",
@@ -1055,7 +1055,7 @@
           "uri": "widgets/DrawPolygon/Widget",
           "position": {
             "right": 7,
-            "top": 110,
+            "top": 150,
             "relativeTo": "map"
           },
           "version": "2.13",
@@ -1342,7 +1342,7 @@
           "uri": "widgets/ZoomSlider/Widget",
           "visible": true,
           "position": {
-            "top": 5,
+            "top": 45,
             "right": 7,
             "relativeTo": "map"
           },
@@ -1417,7 +1417,7 @@
           "uri": "widgets/ClearPolygon/Widget",
           "visible": false,
           "position": {
-            "top": 190,
+            "top": 230,
             "right": 7,
             "relativeTo": "map"
           },

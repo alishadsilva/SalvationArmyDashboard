@@ -20,6 +20,7 @@ define([
   'dojo/_base/array',
   'dojo/_base/html',
   'dojo/query',
+  "dojo/dom-style",
   'dojo/topic',
   'dojo/on',
   'dojo/aspect',
@@ -29,7 +30,17 @@ define([
   'esri/dijit/InfoWindow',
   'esri/dijit/PopupMobile',
   'esri/InfoTemplate',
+  "esri/dijit/Popup",
+  "esri/symbols/SimpleFillSymbol",
+  "esri/symbols/SimpleLineSymbol",
+  "esri/Color",
   'esri/request',
+  "esri/tasks/query",
+  "esri/tasks/QueryTask",
+  "esri/geometry/geometryEngine",
+  "dojo/dom",
+  "dojo/dom-construct",
+  "dojo/_base/array",
   'esri/arcgis/utils',
   'esri/geometry/Extent',
   'esri/geometry/Point',
@@ -41,10 +52,17 @@ define([
   './MapUrlParamsHandler',
   './AppStateManager',
   './PopupManager',
-  './FilterManager'
-], function(declare, lang, array, html, query, topic, on, aspect, keys, i18n, dojoConfig, InfoWindow,
-  PopupMobile, InfoTemplate, esriRequest, arcgisUtils, Extent, Point, require, jimuUtils,
-  LayerInfos, Message, AppStatePopup, MapUrlParamsHandler, AppStateManager, PopupManager, FilterManager) {
+  './FilterManager',
+  "dijit/form/Button",
+  "dojo/parser",
+  "dijit/dijit",
+  "dojox/layout/TableContainer",
+  "dijit/form/TextBox",
+  "dijit/layout/ContentPane",
+  "dijit/registry",
+  "dijit/Dialog",
+   "dojo/domReady!"
+], function(declare, lang, array, html, query,domStyle, topic, on, aspect, keys, i18n, dojoConfig, InfoWindow, PopupMobile, InfoTemplate, Popup, SimpleFillSymbol, SimpleLineSymbol, Color, esriRequest, Query, QueryTask, geometryEngine, dom, domConstruct, arrayUtils, arcgisUtils, Extent, Point, require, jimuUtils, LayerInfos, Message, AppStatePopup, MapUrlParamsHandler, AppStateManager, PopupManager, FilterManager,Button, parser, dijit, TableContainer,TextBox, ContentPane, registry,Dialog) {
   var instance = null,
     clazz = declare(null, {
       appConfig: null,
@@ -72,7 +90,7 @@ define([
         on(window, 'resize', lang.hitch(this, this.onWindowResize));
         on(window, 'unload', lang.hitch(this, this.onUnload));
       },
-
+      
       showMap: function() {
         // console.timeEnd('before map');
         this._showMap(this.appConfig);
@@ -262,7 +280,7 @@ define([
                 mixin: {
                   url: proxyItem.proxyUrl
                 }
-              });
+              }); 
             }
           });
 
@@ -275,13 +293,77 @@ define([
 
         mapDeferred.then(lang.hitch(this, function(response) {
           var map = response.map;
-
           //hide the default zoom slider
-          map.hideZoomSlider();
+          map.hideZoomSlider()
+          var mappy=html.byId('map')
+          mappy.style.top='0px'
+          map._layers.Salvation_Army_points_3737.on("click",lang.hitch(this, executeQueryTask))
+          function executeQueryTask(evt){
+            map._layers.Salvation_Army_points_3737.infoTemplate= new InfoTemplate()
+            map._layers.Salvation_Army_points_3737.infoTemplate.setTitle("Case Information:")
+            var data = "<table><tr><td><b>Object ID: </b></td> <td>" + evt.graphic.attributes.ObjectId + "</td></tr> <tr><td><b>Address: </b></td> <td>" + evt.graphic.attributes.address + "</td></tr> <tr><td><b>Description: </b></td> <td>" + evt.graphic.attributes.description + "</td></tr></table>"
 
+            if (registry.byId("text1")){
+              registry.byId("text1").destroy()
+            }
+            var contentpanel1= new ContentPane({
+              content: data,
+              style: "padding: 0px"
+            })
+
+            function getContent(){
+              var id="table1" + evt.graphic.attributes.ObjectId
+              if (registry.byId(id)){
+                registry.byId(id).destroy()
+              }
+              
+              var tc = new TableContainer(
+                {
+                  // cols: 1,
+                  id: "table1" + evt.graphic.attributes.ObjectId,
+                  customClass:"labelsAndValues",
+                  "labelWidth": "0",
+                  "valueWidth": "100"
+                }
+              )
+              myDialog = new Dialog({
+                title: "Notification",
+                style: "width: 300px",
+                content: "Center Notified!"
+            })
+              var myButton = new Button({
+                label: "Send",
+                onClick: function(){
+                  myDialog.show()
+                }
+              })
+
+              var textbox= new TextBox({
+                style: "margin-left: 18px"
+              })
+
+              if (registry.byId("message")){
+                registry.byId("message").destroy()
+              }
+              var contentpanel2= new ContentPane({
+                id: "message",
+                style: "padding: 0px"
+              })
+              domConstruct.place("<label style='font-weight: bold'>Message:</label",contentpanel2.containerNode)
+              contentpanel2.addChild(textbox)
+              contentpanel2.addChild(myButton)
+            tc.addChild(contentpanel1)
+            // tc.addChild(textbox)
+            // document.getElementById("text1").readOnly = true;
+            tc.addChild(contentpanel2)
+              return tc.domNode
+            }
+            map._layers.Salvation_Army_points_3737.infoTemplate.setContent(getContent())
+          }
+          
+          
           // set default size of infoWindow.
-          map.infoWindow.resize(270, 316);
-          //var extent;
+          map.infoWindow.resize(270, 600);
           map.itemId = appConfig.map.itemId;
           map.itemInfo = response.itemInfo;
           map.webMapResponse = response;
@@ -325,8 +407,6 @@ define([
       },
 
       _handleRefreshLayer: function(featureLayer){
-        // var layerId = "Wildfire_5334";
-        //before refresh => update-start => after refresh => get data => graphic-remove => graphic-add => update-end
         var _drawFeatures = featureLayer._mode._drawFeatures;
         var _clearIf = featureLayer._mode._clearIIf;
         var _cellMap = null;
@@ -659,7 +739,6 @@ define([
       }
 
     });
-
   clazz.getInstance = function(options, mapDivId) {
     if (instance === null) {
       instance = new clazz(options, mapDivId);

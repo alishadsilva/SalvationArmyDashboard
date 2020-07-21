@@ -1,6 +1,6 @@
 .jimu-widget-drawpolygon{
 	border-radius: 5px;
-	background-color: #555;
+	background-color: rgba(0,13,33,0.2);
 	border: 1px solid #999;
 }
 
@@ -44,7 +44,7 @@
 
 .jimu-widget-drawpolygon .place-holder.nohttps,
 .jimu-widget-drawpolygon .place-holder{
-  background-color: lightgray;
+  background-color: rgba(0,13,33,0.2);
 }
 
 .jimu-widget-drawpolygon.onLocate .place-holder{

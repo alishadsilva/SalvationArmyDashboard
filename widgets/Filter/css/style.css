@@ -25,7 +25,7 @@
 }
 
 .jimu-widget-filter .filter-list .filter-item.config-parameters{
-  background-color: #f3f3f3;
+  background-color: rgba(0,13,33,0.2);
 }
 
 .jimu-widget-filter .filter-list .filter-item.config-parameters + .filter-item.config-parameters{
@@ -42,7 +42,7 @@
 }
 
 .jimu-widget-filter .filter-list .filter-item .header:hover{
-  background-color: #eee;
+  background-color: rgba(0,13,33,0.2);
 }
 
 .jimu-widget-filter .filter-list .filter-item.config-parameters .header .item-title{
@@ -144,7 +144,7 @@
 }
 
 .jimu-widget-filter .filter-list .filter-item .body .jimu-btn{
-  background: #fff;
+  background: rgba(0,13,33,0.2);
   border-radius: 0;
   width: 82px;
   border: 1px solid #c7c7c7;
@@ -172,7 +172,7 @@
   width: 40px;
   height: 40px;
   border-radius: 20px;
-  background-color: #333;
+  background-color: rgba(0,13,33,0.2);
   border: 2px solid rgba(255, 255, 255, 0.5);
   background-image: url(images/custom_filter.svg);
   background-position: center;
@@ -181,7 +181,7 @@
   cursor: pointer;
 }
 .jimu-widget-filter .show-custom:hover{
-  background-color: #666;
+  background-color: rgba(0,13,33,0.2);
 }
 .jimu-rtl .jimu-widget-filter .show-custom{
   left: 20px;
@@ -254,7 +254,7 @@
 }
 
 .jimu-widget-filter .filter-list .filter-layer-name {
-  color: #999;
+  color: rgba(0,13,33,0.2);
   background: #fff;
   line-height: 44px;
   font-size: 14px;

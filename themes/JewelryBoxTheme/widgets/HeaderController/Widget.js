@@ -79,6 +79,9 @@ define([
         this.switchableElements.subtitle = this.subtitleNode;
 
         this._handleTitleColorAndLogoLink(this.appConfig);
+        var mappy=html.byId('map')
+        // mappy.style.left='0px'
+        mappy.style.top='0px'
 
         if (this.position && this.position.height) {
           this.height = this.position.height;

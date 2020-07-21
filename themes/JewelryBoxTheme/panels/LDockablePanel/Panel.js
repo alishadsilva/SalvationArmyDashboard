@@ -129,6 +129,7 @@ define(['dojo/_base/declare',
         this.setPosition(this.position);
         var mappy=html.byId('map')
         mappy.style.left='0px'
+        mappy.style.top='0px'
         var popupcontainer= html.byId('_20_panel')
         popupcontainer.style.backgroundColor="rgba(0,13,33,0.5)"
         this.inherited(arguments);

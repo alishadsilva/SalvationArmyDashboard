@@ -1,15 +1,15 @@
 .jimu-widget-homebutton {
-  background-color: #555;
+  background-color: rgba(0,13,33,0.2);
   border-radius: 5px;
   border: 1px solid #999;
 }
 
 .jimu-widget-homebutton .HomeButton .home {
-  background-color: lightgray;
+  background-color: rgba(0,13,33,0.2);
 }
 
 .jimu-widget-homebutton.inHome {
-	background-color: lightgray;
+	background-color: rgba(0,13,33,0.2);
 }
 
 .jimu-widget-homebutton .HomeButton .home:hover {
@@ -17,5 +17,5 @@
 }
 
 .jimu-widget-homebutton.inHome .HomeButton .home {
-	background-color: lightgray;
+	background-color: rgba(0,13,33,0.2);
 }
