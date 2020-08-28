@@ -48,7 +48,6 @@ function(declare, _TemplatedMixin, _WidgetsInTemplateMixin, domStyle, lang, Base
         }, dojo.byId("select1"))
 
       this.map.on("click", lang.hitch(this, function queryfeatures(evt){
-        // console.log(evt.mapPoint)
         domConstruct.empty("select1")
         queryTask= new QueryTask("https://services2.arcgis.com/ffEKAbD1SATUihBS/arcgis/rest/services/GenasysSAInputshosted/FeatureServer/0")
           var queryparams= new Query()
@@ -66,15 +65,13 @@ function(declare, _TemplatedMixin, _WidgetsInTemplateMixin, domStyle, lang, Base
               arrayUtils.map(response.features, lang.hitch(this, function (feature) {
                 var num=geometryEngine.distance(evt.mapPoint, feature.geometry, "miles")
                 var distance= num.toFixed(2)
-                // arrayUtils.map(feature.attributes, lang.hitch(this, function (attribute){
-                //   console.log(attribute)
-                // }))
+
                 var innerhtml= "<p id =\"p1\"><b>Distance: </b>"+ distance +" mi </p> <p id = \"p2\"><b>Corp Name: </b>" + feature.attributes.USER_Corps + " </p><p id=\"p3\"> <b>Corp Address: </b>" +"<a id='zoomto' href=#>" +feature.attributes.USER_Cor_1 +"</a></p> <p id=\"p4\"> <b> Total Volunteers interested in responding to disasters: </b>"+ feature.attributes.USER_Appro +"</p> <p id=\"p5\"> <b>Number of Kitchens: </b>" + feature.attributes.USER_Kitch + "</p> <p id=\"p6\"> <b>Number of available canteens: </b>"+feature.attributes.USER_Cante+  "</p> <p id=\"p7\"><b>Amount & types of vehicles: </b>" +feature.attributes.USER_Oth_1 +"</p> <p id=\"p8\"> <b> Meals a day: </b>" +feature.attributes.USER_Meals +"</p> <p id=\"p9\"><b> What is the Facility good at? </b>"+feature.attributes.USER_What_ + "<p> <p id=\"p10\"><b> Number of active EDS volunteers: </b>" + feature.attributes.USER_How_m +"</p> <p>---------------------------------------------------------------------------</p>"
                 var testdiv= domConstruct.create("div", {id: "test", innerHTML: innerhtml }, tc[0], "first")
                 domStyle.set(testdiv, "font-family", "inherit")
                 var zoomtonode= query("#zoomto")
                 zoomtonode[0].addEventListener("click", lang.hitch(this, function(){
-                  this.map.centerAndZoom(feature.geometry,18)
+                this.map.centerAndZoom(feature.geometry,18)
                 }))
               }));
             }))

@@ -49,6 +49,7 @@ define([
         this.map.graphics.clear()
         // dojo.empty("display1")
         domConstruct.empty("select1")
+        domConstruct.destroy('tc1')
           }
         });
     clazz.inPanel = false;

@@ -58,3 +58,8 @@
 .jimu-widget-drawpolygon .place-holder:hover{
   background-color: #333;
 }
+
+.myButton {
+	padding: 7px 7px 7px 7px; 
+	background-image: url(images\send.png); 
+}
