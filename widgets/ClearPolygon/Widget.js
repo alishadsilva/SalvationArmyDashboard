@@ -23,10 +23,11 @@ define([
     'dojo/_base/lang',
     "./a11y/Widget",
     "dojo/dom-construct",
+    "dojo/dom-style",
     'jimu/dijit/Message',
     'dojo/touch'
   ],
-  function(declare, BaseWidget, html, on, query, lang, a11y,domConstruct) {
+  function(declare, BaseWidget, html, on, query, lang, a11y,domConstruct,domStyle) {
     var clazz = declare([BaseWidget], {
 
       name: 'ClearPolygon',
@@ -50,6 +51,8 @@ define([
         // dojo.empty("display1")
         domConstruct.empty("select1")
         domConstruct.destroy('tc1')
+        var barclick= query("#_20_panel")[0]
+        domStyle.set(barclick, "left", "-360px")
           }
         });
     clazz.inPanel = false;

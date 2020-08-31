@@ -59,7 +59,16 @@
   background-color: #333;
 }
 
-.myButton {
+/* .myButton {
 	padding: 7px 7px 7px 7px; 
 	background-image: url(images\send.png); 
+} */
+
+.dijitReset.dijitInline.dijitButtonNode{
+	background-image: url("images/send2.png") !important;
+	background-repeat: round;
+	height: 30px;
+	width: 30px; 
+	padding: 6px 4px 4px 4px;
+	border-radius: 0px;
 }

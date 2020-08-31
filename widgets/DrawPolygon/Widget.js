@@ -17,6 +17,8 @@
 define([
   'dojo/_base/declare',
   'jimu/BaseWidget',
+  'jimu/WidgetManager',
+  'jimu/PanelManager',
   "esri/geometry/geometryEngine",
   'dojo/_base/html',
   'dojo/on',
@@ -39,10 +41,11 @@ define([
   "dijit/form/Button",
   "dojox/layout/TableContainer",
   "dijit/layout/ContentPane",
+  "./themes/JewelryBoxTheme/panels/LDockablePanel/Panel.js",
   'jimu/dijit/Message',
   'dojo/touch'
 ],
-function(declare, BaseWidget, geometryEngine, html, on, query, registry, lang, jimuUtils, Compass, a11y, Draw, SimpleFillSymbol, Graphic, Color, Query, QueryTask, domConstruct, domStyle, arrayUtils, TextBox, Button, TableContainer, ContentPane) {
+function(declare, BaseWidget, WidgetManager, PanelManager, geometryEngine, html, on, query, registry, lang, jimuUtils, Compass, a11y, Draw, SimpleFillSymbol, Graphic, Color, Query, QueryTask, domConstruct, domStyle, arrayUtils, TextBox, Button, TableContainer, ContentPane, Panel) {
   var clazz = declare([BaseWidget], {
 
     name: 'DrawPolygon',
@@ -61,6 +64,34 @@ function(declare, BaseWidget, geometryEngine, html, on, query, registry, lang, j
       this.placehoder.title ="Draw Polygon";
     },
 
+    // _openPanelWidget: function (aWidgetId) {
+    //   var def = new Deferred();
+    //   var wm = WidgetManager.getInstance();
+    //   var myWidget = wm.getWidgetById(aWidgetId);
+    //   if (myWidget == null) {
+    //     wm.appConfig.widgetPool.widgets.some(function (aWidget) {
+    //       if (aWidget.id == aWidgetId) {
+    //         myWidget = aWidget;
+    //         return true;
+    //       }
+    //       return false;
+    //     });
+    //     wm.loadWidget(myWidget).then(lang.hitch(this, function (args) {
+    //       PanelManager.getInstance().showPanel(myWidget).then(function () {
+    //         wm.openWidget(myWidget);
+    //         def.resolve();
+    //       })
+    //     }));
+    //   } // end if
+    //   else {
+    //     PanelManager.getInstance().showPanel(myWidget).then(function () {
+    //       wm.openWidget(myWidget);
+    //       def.resolve();
+    //     })
+    //   } // end else
+    //   return def;
+    // },
+
     onLocationClick: function(evt) {
       this.map.graphics.clear()
       var markerpolySymbol = new SimpleFillSymbol();
@@ -72,7 +103,6 @@ function(declare, BaseWidget, geometryEngine, html, on, query, registry, lang, j
 
         function addGraphic(polyevt){
           toolbar.deactivate()
-          // _onBarClick()
           var content=["Distance", "Corp Name", "Corp Address", "Specialty"]
           var symbol=markerpolySymbol;
           this.map.graphics.add(new Graphic(polyevt.geometry, symbol))
@@ -169,11 +199,10 @@ function(declare, BaseWidget, geometryEngine, html, on, query, registry, lang, j
 
           var myButton = new Button({
             id: "myButton",
-            iconClass: "dijitIconMail",
-            // iconClass="myIcon",
+            // iconClass: "dijitIconMail",
+            iconClass: "myIcon",
             showLabel: false,
             label: "Send",
-            style: "padding: 7px 7px 7px 7px;"
           }, domConstruct.create("button",{id:"sendbutton"}))
 
           contenttable.addChild(cp0)
@@ -194,8 +223,11 @@ function(declare, BaseWidget, geometryEngine, html, on, query, registry, lang, j
             },domConstruct.create("div", {id:"cp2div"+x}))
             contenttable.addChild(cp2)
         }
+        var barclick= query("#_20_panel")[0]
+        domStyle.set(barclick, "left", "0px")
     }))
   }
+
 }
 });
   clazz.inPanel = false;
