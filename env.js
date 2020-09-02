@@ -100,11 +100,11 @@ var
 (function(global){
   //init API URL
   var queryObject = getQueryObject();
-  var apiVersion = '3.29';
+  var apiVersion = '3.32';
 
   ////////uncomment the following line when downloading the app
 
-  apiUrl = 'https://js.arcgis.com/3.29';
+  apiUrl = 'https://js.arcgis.com/3.32';
 
   //////////////////////////////////////////////////////////////
   allCookies = getAllCookies();
