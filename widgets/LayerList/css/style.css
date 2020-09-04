@@ -42,6 +42,7 @@
 .jimu-widget-layerList .layer-list-table{
   width: 100%;
   border-spacing: 0px;
+  color: #000;
 }
 
 .jimu-widget-layerList .layers-list-body{
