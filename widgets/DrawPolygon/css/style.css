@@ -64,11 +64,16 @@
 	background-image: url(images\send.png); 
 } */
 
-.dijitReset.dijitInline.dijitButtonNode{
-	background-image: url("images/send2.png") !important;
-	background-repeat: round;
-	height: 30px;
-	width: 30px; 
-	padding: 6px 4px 4px 4px;
-	border-radius: 0px;
+#myButton {
+    background-image: url(images/send2.png) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 24px;
+    width: 24px;
+    padding: 6px 4px 4px 4px;
+	border-radius: 0px !important;
+}
+
+.dijitReset.dijitInline.dijitButtonNode {
+	border-radius: 0px !important;
 }

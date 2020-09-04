@@ -299,6 +299,9 @@ define([
           mappy.style.top='0px'
           map._layers.Salvation_Army_points_3737.on("click",lang.hitch(this, executeQueryTask))
           function executeQueryTask(evt){
+            map.popupManager._calculateClickTolerance = function(graphicsLayers) {
+              return 0.1;
+          }
             map._layers.Salvation_Army_points_3737.infoTemplate= new InfoTemplate()
             map._layers.Salvation_Army_points_3737.infoTemplate.setTitle("Case Information:")
             var data = "<table><tr><td><b>Object ID: </b></td> <td>" + evt.graphic.attributes.ObjectId + "</td></tr> <tr><td><b>Address: </b></td> <td>" + evt.graphic.attributes.address + "</td></tr> <tr><td><b>Description: </b></td> <td>" + evt.graphic.attributes.description + "</td></tr></table>"
@@ -316,6 +319,8 @@ define([
               if (registry.byId(id)){
                 registry.byId(id).destroy()
               }
+              
+              // window.map.infoWindow.selectPrevious();
               
               var tc = new TableContainer(
                 {

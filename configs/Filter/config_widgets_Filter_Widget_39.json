@@ -1,0 +1,84 @@
+{
+  "taskOper": "OR",
+  "groupByLayer": false,
+  "zoomto": false,
+  "allowCustom": false,
+  "filters": [
+    {
+      "layerId": "Salvation_Army_points_3737",
+      "url": "https://services2.arcgis.com/ffEKAbD1SATUihBS/arcgis/rest/services/Salvation_Army_points/FeatureServer/0",
+      "name": "Salvation_Army_points",
+      "filter": {
+        "logicalOperator": "AND",
+        "parts": [
+          {
+            "fieldObj": {
+              "name": "services",
+              "label": "services",
+              "dateFormat": "",
+              "shortType": "string",
+              "type": "esriFieldTypeString"
+            },
+            "operator": "stringOperatorIs",
+            "valueObj": {
+              "isValid": true,
+              "selectUI": "dropdown",
+              "type": "uniquePredefined",
+              "value": [
+                {
+                  "value": "Administration, Corps Community Center",
+                  "alias": "Administration, Corps Community Center",
+                  "isChecked": false
+                },
+                {
+                  "value": "Corps Community Center, Family Services Department,",
+                  "alias": "Corps Community Center, Family Services Department,",
+                  "isChecked": false
+                }
+              ],
+              "emptyLabel": "- empty -",
+              "enableEmpty": true
+            },
+            "interactiveObj": {
+              "prompt": "Services is",
+              "hint": "",
+              "cascade": "none"
+            },
+            "caseSensitive": false
+          }
+        ],
+        "expr": "1=1",
+        "displaySQL": "1=1"
+      },
+      "icon": null,
+      "enableMapFilter": true,
+      "autoApplyWhenWidgetOpen": false,
+      "collapse": false,
+      "symbol": {
+        "color": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "size": 18,
+        "angle": 0,
+        "xoffset": 0,
+        "yoffset": 0,
+        "type": "esriSMS",
+        "style": "esriSMSCircle",
+        "outline": {
+          "color": [
+            0,
+            0,
+            128,
+            255
+          ],
+          "width": 0.75,
+          "type": "esriSLS",
+          "style": "esriSLSSolid"
+        }
+      }
+    }
+  ]
+}

@@ -60,14 +60,15 @@
       {
         "uri": "widgets/Search/Widget",
         "position": {
-          "right": 55,
-          "top": 45,
+          "right": 90,
+          "top": 4,
           "relativeTo": "map"
         },
         "version": "2.13",
         "id": "widgets_Search_Widget_23",
         "name": "Search",
-        "config": "configs/Search/config_widgets_Search_Widget_23.json"
+        "config": "configs/Search/config_widgets_Search_Widget_23.json",
+        "visible": false
       },
       {
         "uri": "widgets/Coordinate/Widget",
@@ -95,29 +96,6 @@
         "uri": ""
       },
       {
-        "position": {
-          "right": 55,
-          "top": 85,
-          "relativeTo": "map"
-        },
-        "placeholderIndex": 1,
-        "id": "_26",
-        "name": "Filter",
-        "version": "2.13",
-        "closeable": true,
-        "uri": "widgets/Filter/Widget",
-        "config": "configs/Filter/config__26.json"
-      },
-      {
-        "position": {
-          "right": 155,
-          "top": 85,
-          "relativeTo": "map"
-        },
-        "placeholderIndex": 2,
-        "id": "_27"
-      },
-      {
         "uri": "widgets/OverviewMap/Widget",
         "position": {
           "right": 0,
@@ -134,7 +112,7 @@
         "uri": "widgets/HomeButton/Widget",
         "position": {
           "right": 7,
-          "top": 115,
+          "top": 150,
           "relativeTo": "map"
         },
         "version": "2.13",
@@ -145,7 +123,7 @@
         "uri": "widgets/DrawPolygon/Widget",
         "position": {
           "right": 7,
-          "top": 150,
+          "top": 190,
           "relativeTo": "map"
         },
         "version": "2.13",
@@ -177,7 +155,7 @@
       {
         "uri": "widgets/ZoomSlider/Widget",
         "position": {
-          "top": 45,
+          "top": 80,
           "right": 7,
           "relativeTo": "map"
         },
@@ -189,7 +167,7 @@
       {
         "uri": "widgets/ClearPolygon/Widget",
         "position": {
-          "top": 188,
+          "top": 230,
           "right": 7,
           "relativeTo": "map"
         },
@@ -277,11 +255,38 @@
     },
     "widgets": [
       {
+        "name": "Search",
+        "label": "Search",
+        "version": "2.13",
+        "uri": "widgets/Search/Widget",
+        "config": "configs/Search/config_widgets_Search_Widget_38.json",
+        "index": 2,
+        "id": "widgets_Search_Widget_38",
+        "position": {
+          "relativeTo": "map"
+        }
+      },
+      {
+        "name": "Filter",
+        "version": "2.13",
+        "uri": "widgets/Filter/Widget",
+        "config": "configs/Filter/config_widgets_Filter_Widget_39.json",
+        "index": 3,
+        "id": "widgets_Filter_Widget_39"
+      },
+      {
         "uri": "widgets/Legend/Widget",
         "version": "2.13",
         "id": "widgets_Legend_Widget_18",
         "name": "Legend",
-        "index": 2
+        "index": 4
+      },
+      {
+        "uri": "widgets/LayerList/Widget",
+        "version": "2.13",
+        "id": "widgets_LayerList_Widget_19",
+        "name": "LayerList",
+        "index": 5
       }
     ],
     "groups": []
@@ -357,7 +362,7 @@
           "inPanel": false,
           "position": {
             "right": 7,
-            "top": 115
+            "top": 150
           },
           "version": "2.13"
         },
@@ -366,7 +371,7 @@
           "inPanel": false,
           "position": {
             "right": 7,
-            "top": 150
+            "top": 190
           },
           "version": "2.13"
         },
@@ -389,7 +394,7 @@
           "uri": "widgets/ZoomSlider/Widget",
           "visible": true,
           "position": {
-            "top": 5,
+            "top": 80,
             "right": 7
           },
           "version": "2.13"
@@ -398,7 +403,7 @@
           "uri": "widgets/ClearPolygon/Widget",
           "visible": false,
           "position": {
-            "top": 188,
+            "top": 230,
             "right": 7
           },
           "version": "2.13"
@@ -980,7 +985,7 @@
           "uri": "widgets/HomeButton/Widget",
           "position": {
             "right": 7,
-            "top": 115,
+            "top": 150,
             "relativeTo": "map"
           },
           "version": "2.13",
@@ -1055,7 +1060,7 @@
           "uri": "widgets/DrawPolygon/Widget",
           "position": {
             "right": 7,
-            "top": 150,
+            "top": 190,
             "relativeTo": "map"
           },
           "version": "2.13",
@@ -1783,7 +1788,7 @@
             "uri": "themes/FoldableTheme/panels/FoldablePanel/Panel",
             "position": {
               "top": 5,
-              "right": 5,
+              "right": 15,
               "bottom": 5,
               "zIndex": 5,
               "relativeTo": "map"

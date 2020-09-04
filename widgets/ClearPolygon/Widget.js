@@ -22,12 +22,13 @@ define([
     'dojo/query',
     'dojo/_base/lang',
     "./a11y/Widget",
+    "esri/toolbars/draw",
     "dojo/dom-construct",
     "dojo/dom-style",
     'jimu/dijit/Message',
     'dojo/touch'
   ],
-  function(declare, BaseWidget, html, on, query, lang, a11y,domConstruct,domStyle) {
+  function(declare, BaseWidget, html, on, query, lang, a11y, Draw, domConstruct,domStyle) {
     var clazz = declare([BaseWidget], {
 
       name: 'ClearPolygon',
@@ -48,6 +49,7 @@ define([
 
       onClearClick: function(evt) {
         this.map.graphics.clear()
+        toolbar.deactivate()
         // dojo.empty("display1")
         domConstruct.empty("select1")
         domConstruct.destroy('tc1')
