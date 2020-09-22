@@ -331,33 +331,33 @@ define([
                   "valueWidth": "100"
                 }
               )
-              myDialog = new Dialog({
-                title: "Notification",
-                style: "width: 300px",
-                content: "Center Notified!"
-            })
+            //   myDialog = new Dialog({
+            //     title: "Notification",
+            //     style: "width: 300px",
+            //     content: "Center Notified!"
+            // })
               var myButton = new Button({
-                label: "Send",
+                label: "Contacts",
                 onClick: function(){
-                  myDialog.show()
+                  console.log("Clicked")
                 }
               })
 
-              var textbox= new TextBox({
-                style: "margin-left: 18px"
-              })
+              // var textbox= new TextBox({
+              //   style: "margin-left: 18px"
+              // })
 
-              if (registry.byId("message")){
-                registry.byId("message").destroy()
-              }
+              // if (registry.byId("message")){
+              //   registry.byId("message").destroy()
+              // }
               var contentpanel2= new ContentPane({
                 id: "message",
                 style: "padding: 0px"
               })
               domConstruct.place("<label style='font-weight: bold'>Message:</label",contentpanel2.containerNode)
-              contentpanel2.addChild(textbox)
+              // contentpanel2.addChild(textbox)
               contentpanel2.addChild(myButton)
-            tc.addChild(contentpanel1)
+              tc.addChild(contentpanel1)
             // tc.addChild(textbox)
             // document.getElementById("text1").readOnly = true;
             tc.addChild(contentpanel2)
