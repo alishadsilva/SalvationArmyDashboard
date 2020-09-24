@@ -7725,6 +7725,12 @@ body:not(.ie-gte-10) .jimu-dijit-statistics-chart{
 	width: 80px;
 }
 
+#grid {
+  height: 200px; 
+  border: none;
+  font-size: xx-small;
+}
+
 /* main-loading */
 #main-loading.loading-fadeOut {
   animation: 1.5s main-loading-fadeOut-anim;

@@ -54,6 +54,10 @@ define([
   './PopupManager',
   './FilterManager',
   "dijit/form/Button",
+  "dijit/form/DropDownButton", 
+  "dijit/DropDownMenu", 
+  "dijit/MenuItem",
+  "dojo/dom",
   "dojo/parser",
   "dijit/dijit",
   "dojox/layout/TableContainer",
@@ -61,8 +65,12 @@ define([
   "dijit/layout/ContentPane",
   "dijit/registry",
   "dijit/Dialog",
+  "dojox/grid/EnhancedGrid",
+  "dojo/store/Memory",
+  "dojo/data/ObjectStore",  
+  "dojox/grid/_RadioSelector",
    "dojo/domReady!"
-], function(declare, lang, array, html, query,domStyle, topic, on, aspect, keys, i18n, dojoConfig, InfoWindow, PopupMobile, InfoTemplate, Popup, SimpleFillSymbol, SimpleLineSymbol, Color, esriRequest, Query, QueryTask, geometryEngine, dom, domConstruct, arrayUtils, arcgisUtils, Extent, Point, require, jimuUtils, LayerInfos, Message, AppStatePopup, MapUrlParamsHandler, AppStateManager, PopupManager, FilterManager,Button, parser, dijit, TableContainer,TextBox, ContentPane, registry,Dialog) {
+], function(declare, lang, array, html, query, domStyle, topic, on, aspect, keys, i18n, dojoConfig, InfoWindow, PopupMobile, InfoTemplate, Popup, SimpleFillSymbol, SimpleLineSymbol, Color, esriRequest, Query, QueryTask, geometryEngine, dom, domConstruct, arrayUtils, arcgisUtils, Extent, Point, require, jimuUtils, LayerInfos, Message, AppStatePopup, MapUrlParamsHandler, AppStateManager, PopupManager, FilterManager,Button, DropDownButton, DropDownMenu, MenuItem, dom, parser, dijit, TableContainer,TextBox, ContentPane, registry,Dialog,EnhancedGrid, Memory, ObjectStore) {
   var instance = null,
     clazz = declare(null, {
       appConfig: null,
@@ -297,9 +305,27 @@ define([
           map.hideZoomSlider()
           var mappy=html.byId('map')
           mappy.style.top='0px'
+
+          layout = [
+            { type: "dojox.grid._RadioSelector"},
+            [
+            {'name': 'First', 'field': 'col1'},
+            {'name': 'Last', 'field': 'col2'},
+            {'name': 'Contact', 'field': 'col3'},
+            {'name': 'Email', 'field': 'col4', 'width': '150px'}
+          ]];
+      
+          /*create a new grid:*/
+          grid = new EnhancedGrid({
+              id: 'grid',
+              style: "height: 200px; font-size: xx-small;",
+              structure: layout
+            },
+            document.createElement('div'));
+
           map._layers.Salvation_Army_points_3737.on("click",lang.hitch(this, executeQueryTask))
           function executeQueryTask(evt){
-            map.popupManager._calculateClickTolerance = function(graphicsLayers) {
+            map.popupManager._calculateClickTolerance = function() {
               return 0.1;
           }
             map._layers.Salvation_Army_points_3737.infoTemplate= new InfoTemplate()
@@ -324,43 +350,84 @@ define([
               
               var tc = new TableContainer(
                 {
-                  // cols: 1,
                   id: "table1" + evt.graphic.attributes.ObjectId,
                   customClass:"labelsAndValues",
                   "labelWidth": "0",
                   "valueWidth": "100"
                 }
               )
-            //   myDialog = new Dialog({
-            //     title: "Notification",
-            //     style: "width: 300px",
-            //     content: "Center Notified!"
-            // })
-              var myButton = new Button({
-                label: "Contacts",
-                onClick: function(){
-                  console.log("Clicked")
-                }
+              myDialog = new Dialog({
+                title: "Notification",
+                style: "width: 300px",
+                content: "Center Notified!"
+            })
+
+            var menu = new DropDownMenu({ style: "display: none; height: auto; width: auto"});
+
+            var menuItem1 = new TableContainer(
+              {
+                id: "table2" + evt.graphic.attributes.ObjectId,
+                customClass:"labelsAndValues",
+                "labelWidth": "0",
+                "valueWidth": "100"
               })
 
-              // var textbox= new TextBox({
-              //   style: "margin-left: 18px"
-              // })
+            var cp1= new ContentPane({
+              style: "width: 300px"
+            })
+            domConstruct.place("<label style='font-weight: bold'>Type Message:</label",cp1.containerNode)
 
-              // if (registry.byId("message")){
-              //   registry.byId("message").destroy()
-              // }
+            var tb2= new TextBox({
+              label: "Message: "
+            })
+
+            var cp2= new ContentPane()
+            var sendbutton = new Button({
+              label: "Send",
+            })
+
+            var data_list = [
+              { col1: "Ricardo", col2: "Morey", col3: '123-456-7890', col4:'rmorey@genasys.com'},
+              { col1: "Alisha", col2: "D'silva", col3: '123-456-7890', col4: 'alishapdsilva@gmail.com'},
+            ];
+
+            var objectstore2= new Memory({
+              data: data_list
+            })
+            var store= new ObjectStore({objectStore: objectstore2});
+
+            grid.setStore(store)
+
+            /*set up layout*/
+            
+              // grid.resize()
+            /*append the new grid to the div*/
+          
+            cp1.addChild(tb2)
+            cp1.addChild(sendbutton)
+            cp2.addChild(grid);
+            menuItem1.addChild(cp1)
+            menuItem1.addChild(cp2)
+            menu.addChild(menuItem1);
+
+            var myButton = new DropDownButton({
+              label: "Contacts",
+              name: "programmatic2",
+              dropDown: menu
+          })
+
+              if (registry.byId("message")){
+                registry.byId("message").destroy()
+              }
               var contentpanel2= new ContentPane({
                 id: "message",
                 style: "padding: 0px"
               })
+
               domConstruct.place("<label style='font-weight: bold'>Message:</label",contentpanel2.containerNode)
-              // contentpanel2.addChild(textbox)
               contentpanel2.addChild(myButton)
               tc.addChild(contentpanel1)
-            // tc.addChild(textbox)
-            // document.getElementById("text1").readOnly = true;
-            tc.addChild(contentpanel2)
+              tc.addChild(contentpanel2)
               return tc.domNode
             }
             map._layers.Salvation_Army_points_3737.infoTemplate.setContent(getContent())
