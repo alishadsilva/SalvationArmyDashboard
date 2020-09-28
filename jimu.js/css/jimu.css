@@ -7731,6 +7731,36 @@ body:not(.ie-gte-10) .jimu-dijit-statistics-chart{
   font-size: xx-small;
 }
 
+.dojoxGrid .dojoxGridCell{
+  border: none !important;
+  background-color: rgb(243, 241, 241) !important;
+}
+
+.dojoxGridHeader .dojoxGridCell {
+  background-image: none !important;
+  background-color: rgb(243, 241, 241) !important;
+}
+
+.dojoxGridHeader .dojoxGridCell div {
+  color: black;           
+}
+
+.dojoxGridScrollbox .dojoxGridContent div {
+  border: none !important;
+  background-color: rgb(243, 241, 241) !important;
+  padding-right: 0px !important;
+}
+
+#dijit_DialogUnderlay_0 #dijit_Dialog_0_underlay{
+  background: none !important;
+}
+
+#dijit_Dialog_0 {
+  right: 5px !important; 
+  top: 275px !important; 
+  left: 84% !important;
+  position: fixed !important;
+}
 /* main-loading */
 #main-loading.loading-fadeOut {
   animation: 1.5s main-loading-fadeOut-anim;

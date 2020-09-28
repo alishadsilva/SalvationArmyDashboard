@@ -69,6 +69,7 @@ define([
   "dojo/store/Memory",
   "dojo/data/ObjectStore",  
   "dojox/grid/_RadioSelector",
+  "dojox/grid/enhanced/plugins/Selector",
    "dojo/domReady!"
 ], function(declare, lang, array, html, query, domStyle, topic, on, aspect, keys, i18n, dojoConfig, InfoWindow, PopupMobile, InfoTemplate, Popup, SimpleFillSymbol, SimpleLineSymbol, Color, esriRequest, Query, QueryTask, geometryEngine, dom, domConstruct, arrayUtils, arcgisUtils, Extent, Point, require, jimuUtils, LayerInfos, Message, AppStatePopup, MapUrlParamsHandler, AppStateManager, PopupManager, FilterManager,Button, DropDownButton, DropDownMenu, MenuItem, dom, parser, dijit, TableContainer,TextBox, ContentPane, registry,Dialog,EnhancedGrid, Memory, ObjectStore) {
   var instance = null,
@@ -309,17 +310,20 @@ define([
           layout = [
             { type: "dojox.grid._RadioSelector"},
             [
-            {'name': 'First', 'field': 'col1'},
-            {'name': 'Last', 'field': 'col2'},
-            {'name': 'Contact', 'field': 'col3'},
-            {'name': 'Email', 'field': 'col4', 'width': '150px'}
+            {'name': 'First', 'field': 'col1', 'width' : '50px'},
+            {'name': 'Last', 'field': 'col2', 'width' : '50px'},
+            {'name': 'Contact', 'field': 'col3', 'width': '75px'},
+            {'name': 'Email', 'field': 'col4', 'width': '125px'}
           ]];
       
           /*create a new grid:*/
           grid = new EnhancedGrid({
               id: 'grid',
-              style: "height: 200px; font-size: xx-small;",
-              structure: layout
+              style: "height: 200px; font-size: x-small; background-color: rgb(243, 241, 241)",
+              structure: layout,
+              plugins:{
+                selector: true
+              }
             },
             document.createElement('div'));
 
@@ -357,12 +361,12 @@ define([
                 }
               )
               myDialog = new Dialog({
-                title: "Notification",
-                style: "width: 300px",
-                content: "Center Notified!"
+                title: "Chat",
+                style: "width: 300px;",
+                content: "Type here: <input type: text>"
             })
 
-            var menu = new DropDownMenu({ style: "display: none; height: auto; width: auto"});
+            var menu = new DropDownMenu({ style: "display: none; height: auto; width: 300px"});
 
             var menuItem1 = new TableContainer(
               {
@@ -373,17 +377,22 @@ define([
               })
 
             var cp1= new ContentPane({
-              style: "width: 300px"
+              style: "width: 300px; background-color: rgba(0, 13, 33)",
+              content: "<div style= 'color: white'> Type Message: </div>"
             })
-            domConstruct.place("<label style='font-weight: bold'>Type Message:</label",cp1.containerNode)
+            // domConstruct.place("<label style='font-weight: bold'>Type Message:</label",cp1.containerNode)
 
             var tb2= new TextBox({
-              label: "Message: "
+              label: "Message: ",
+              style: "width: 280px"
             })
 
-            var cp2= new ContentPane()
+            var cp2= new ContentPane({
+              style: "background-color: rgb(243, 241, 241)"
+            })
             var sendbutton = new Button({
               label: "Send",
+              style: "float: right"
             })
 
             var data_list = [
@@ -409,6 +418,13 @@ define([
             menuItem1.addChild(cp1)
             menuItem1.addChild(cp2)
             menu.addChild(menuItem1);
+
+            var handle = dojo.connect(grid, "onEndSelect", function(type, startPoint, endPoint, selected){
+              // alert(selected)
+              console.log(selected)
+              myDialog.show()
+            });
+            
 
             var myButton = new DropDownButton({
               label: "Contacts",
